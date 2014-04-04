@@ -1,0 +1,27 @@
+{
+  "name": "registry-status-pagelet",
+  "version": "0.0.0",
+  "description": "Pagelet with visual status overview of npm registries",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha $(find test -name '*.test.js')"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nodejitsu/registry-status-pagelet.git"
+  },
+  "keywords": [
+    "pagelet",
+    "bigpipe",
+    "npm",
+    "mirrors",
+    "status",
+    "chart"
+  ],
+  "author": "Martijn Swaagman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nodejitsu/registry-status-pagelet/issues"
+  },
+  "homepage": "https://github.com/nodejitsu/registry-status-pagelet"
+}
