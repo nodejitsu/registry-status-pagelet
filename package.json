@@ -23,5 +23,10 @@
   "bugs": {
     "url": "https://github.com/nodejitsu/registry-status-pagelet/issues"
   },
-  "homepage": "https://github.com/nodejitsu/registry-status-pagelet"
+  "homepage": "https://github.com/nodejitsu/registry-status-pagelet",
+  "dependencies": {
+    "contour": "~0.2.1",
+    "ejs": "~1.0.0",
+    "pagelet": "~0.2.2"
+  }
 }
