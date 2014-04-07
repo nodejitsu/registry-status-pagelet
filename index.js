@@ -27,11 +27,11 @@ Pagelet.extend({
   world: require(__dirname + '/world.json'),
 
   //
-  // By default the data receiver can be a plain EventEmitter instance. Add
+  // By default the data collector can be a plain EventEmitter instance. Add
   // something like the npm-probe module to collect data from each of the npm
   // mirrors and the main npm registry itself.
   //
-  receiver: new EventEmitter,
+  collector: new EventEmitter,
 
   /**
    * Prepare the data for rendering. All the data that is send to the callback
