@@ -27,6 +27,6 @@
   "dependencies": {
     "contour": "~0.2.1",
     "ejs": "~1.0.0",
-    "pagelet": "~0.2.2"
+    "pagelet": "~0.2.4"
   }
 }
