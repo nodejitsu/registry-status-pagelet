@@ -21,6 +21,11 @@ Pagelet.extend({
   ],
 
   //
+  // Keys of the data that should be supplied to the client.
+  //
+  query: [ 'world' ],
+
+  //
   // Load all the world data from JSON. This can be shipped with the actual pagelet
   // as loading is asynchronous anyways, in regular pages this would cause severe
   //
