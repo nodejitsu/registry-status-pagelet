@@ -19,7 +19,7 @@ Pagelet.extend({
   dependencies: [
     '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js',
     '//cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js',
-    Contour.get('npm').styl
+    Contour.get('npm').grid
   ],
 
   //
