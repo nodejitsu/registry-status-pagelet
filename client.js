@@ -1,30 +1,62 @@
-pipe.once('status::initialise', function (data, pagelet) {
-  'use strict';
+/*global d3,topojson,pipe*/
+'use strict';
 
-  function Map(data) {
+/**
+ * Construct a new geographical map.
+ *
+ * @constructor
+ * @param {Object} data World map data.
+ * @param {Object} options additional options like the height and width.
+ * @api public
+ */
+function Map(data, options) {
+  this.projection = d3.geo.equirectangular();
+  this.path = d3.geo.path();
+  this.data = data;
 
-  }
+  this.width = options.width;
+  this.height = options.height;
+  this.scale = options.scale;
+}
 
-  Map.prototype.initialize = function initialize() {
-    projection = d3.geo.equirectangular()
-    path = d3.geo.path().projection(projection)
+/**
+ * Initialize the map on the provided element.
+ *
+ * @param {Element} base SVG element holding the map.
+ * @api public
+ */
+Map.prototype.initialize = function initialize(base) {
+  this.svg = base.append('svg').attr('height', this.height).attr('width', this.width);
+  this.path = this.path.projection(this.projection);
 
-    map.countries
-      .selectAll('path')
-      .data(data.world.features)
-      .enter()
-      .append('svg:path')
-      .attr('d', path);
-  };
+  this.projection = this.projection.scale(this.scale).translate([
+    this.width / 2,
+    this.height / 2
+  ]);
 
-  Map.prototype.draw = function draw() {
+  this.draw();
+};
 
-  };
+/**
+ * Draw paths on the map under a svg group element.
+ *
+ * @api public
+ */
+Map.prototype.draw = function draw() {
+  this.countries = this.svg.append('g').attr('class', 'countries');
+  this.countries
+    .selectAll('path')
+    .data(this.data.features)
+    .enter()
+    .append('path')
+    .attr('d', this.path);
+};
 
+pipe.once('status::initialise', function (pipe, pagelet) {
   //
-  // We don't need to have any other information from the pagelet then the
-  // placeholders/elements that contain our status-pagelet placeholders.
+  // Initialize the map from the data and options.
   //
-  console.log(arguments);
-  var map = new Map(data.world);
+  var map = new Map(pagelet.data.world, pagelet.data.options).initialize(
+    d3.select(pagelet.placeholders[0]).select('.row')
+  );
 });

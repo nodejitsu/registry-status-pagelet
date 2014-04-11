@@ -18,18 +18,23 @@ Pagelet.extend({
   //
   dependencies: [
     '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js',
+    '//cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js',
+    Contour.get('npm').styl
   ],
 
   //
   // Keys of the data that should be supplied to the client.
   //
-  query: [ 'world' ],
+  query: [ 'world', 'options' ],
 
   //
   // Load all the world data from JSON. This can be shipped with the actual pagelet
   // as loading is asynchronous anyways, in regular pages this would cause severe
   //
-  world: require(__dirname + '/world.json'),
+  static: {
+    world: require(__dirname + '/world.json'),
+    options: { height: 600, width: 1140, scale: 200 }
+  },
 
   //
   // By default the data collector can be a plain EventEmitter instance. Add
@@ -46,8 +51,6 @@ Pagelet.extend({
    * @api private
    */
   get: function get(next) {
-    next(null, {
-      world: this.world
-    });
+    next(null, this.static);
   }
 }).on(module);
