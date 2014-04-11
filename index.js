@@ -1,6 +1,7 @@
 'use strict';
 
-var Pagelet = require('pagelet')
+var path = require('path')
+  , Pagelet = require('pagelet')
   , Contour = require('contour')
   , EventEmitter = require('events').EventEmitter;
 
@@ -25,15 +26,21 @@ Pagelet.extend({
   //
   // Keys of the data that should be supplied to the client.
   //
-  query: [ 'world', 'options' ],
+  query: [ 'world', 'options', 'registry' ],
 
   //
   // Load all the world data from JSON. This can be shipped with the actual pagelet
   // as loading is asynchronous anyways, in regular pages this would cause severe
   //
   static: {
-    world: require(__dirname + '/world.json'),
-    options: { height: 600, width: 1140, scale: 200 }
+    world: require(path.join(__dirname, 'world.json')),
+    registry: require(path.join(__dirname, 'registries.json')),
+    options: {
+      height: 600,
+      width: 1140,
+      scale: 200,
+      radius: 5
+    }
   },
 
   //

@@ -1,0 +1,44 @@
+{
+  "locations": [
+    {
+      "id": "nodejitsu",
+      "name": "Nodejitsu.com mirror",
+      "lonlat": [30, 20]
+    },
+    {
+      "id": "strongloop",
+      "name": "Strongloop.com mirror",
+      "lonlat": [30, 20]
+    },
+    {
+      "id": "npmjsau",
+      "name": "Australian mirror",
+      "lonlat": [30, 20]
+    },
+    {
+      "id": "npmjseu",
+      "name": "European mirror",
+      "lonlat": [30, 20]
+    },
+    {
+      "id": "npmjs",
+      "name": "Main npm registry",
+      "lonlat": [30, 20]
+    },
+    {
+      "id": "cnpmjs",
+      "name": "Chinese mirror",
+      "lonlat": [30, 20]
+    },
+    {
+      "id": "fullfat",
+      "name": "Fullfat mirror",
+      "lonlat": [30, 20]
+    },
+    {
+      "id": "iriscouch",
+      "name": "Iriscouch mirror",
+      "lonlat": [30, 20]
+    }
+  ]
+}
