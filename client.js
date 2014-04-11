@@ -49,7 +49,10 @@ Map.prototype.draw = function draw() {
     .data(this.data.features)
     .enter()
     .append('path')
-    .attr('d', this.path);
+    .attr('d', this.path)
+    .attr('class', function addClass() {
+      return 'hecta-' + Math.round(Math.random() * 10);
+    });
 };
 
 pipe.once('status::initialise', function (pipe, pagelet) {
