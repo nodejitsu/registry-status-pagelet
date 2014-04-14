@@ -49,9 +49,9 @@ Pagelet.extend({
     options: {
       marker: marker,     // SVG path for map marker
       animation: 300,     // Amount of milliseconds an animation should take
-      height: 600,        // Height of the widget in pixels
+      height: 400,        // Height of the widget in pixels
       width: 1140,        // Width of the widget in pixels === grid.row
-      scale: 100,         // Relative scale of the map
+      scale: 112,         // Relative scale of the map
       ratio: 0.618        // Relative width the map can use
     }
   },

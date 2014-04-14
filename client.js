@@ -24,18 +24,17 @@ function Map(data) {
  * @api public
  */
 Map.prototype.initialize = function initialize(base) {
-  this.svg = base.append('svg')
-  this.chart = base.append('svg');
+  this.map = base.append('svg').attr('class', 'map');
+  this.chart = base.append('svg').attr('class', 'charts');
 
-  this.set(this.svg, this.options.width * this.options.ratio, this.options.height);
+  this.set(this.map, this.options.width * this.options.ratio, this.options.height);
   this.set(this.chart, this.options.width * (1 - this.options.ratio), this.options.height);
 
   this.path = this.path.projection(this.projection);
-
   this.projection = this.projection.scale(this.options.scale);
 
   this.draw();
-  this.registries = new Registry(this).initialize(this.svg);
+  this.registries = new Registry(this).initialize(this.map);
 
   return this;
 };
@@ -54,15 +53,26 @@ Map.prototype.set = function set(svg, width, height) {
  * @return {Map} fluent interface
  * @api public
  */
-Map.prototype.draw = function draw() {
-  this.countries = this.svg.append('g').attr('class', 'countries');
-  this.countries
+Map.prototype.draw = function draw(box) {
+  var world = this.map.append('g').attr('class', 'countries');
+
+  world
     .selectAll('path')
     .data(this.data.world.features)
     .enter()
     .append('path')
     .attr('d', this.path);
 
+  //
+  // Update the position of the drawn map relative to the containing SVG element.
+  //
+  box = box || world[0][0].getBoundingClientRect();
+  this.projection = this.projection.translate([
+    box.width / 2,
+    this.options.height / 2
+  ]);
+
+  world.selectAll('path').data(this.data.world.features).attr('d', this.path);
   return this;
 };
 
@@ -97,7 +107,7 @@ Registry.prototype.add = function add() {
 Registry.prototype.translate = function translate(mirror) {
   var xy = this.map.projection(mirror.lonlat);
   xy[0] = xy[0] - 21/2;
-  xy[1] = xy[1] - 27; // TODO: use actual height/width of marker
+  xy[1] = xy[1] - 26; // TODO: use actual height/width of marker
 
   return 'translate('+ xy.join() +')';
 };
