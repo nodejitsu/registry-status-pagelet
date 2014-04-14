@@ -8,10 +8,11 @@
  * @param {Object} data World map data.
  * @api public
  */
-function Map(data) {
+function Map(data, dispatch) {
   this.projection = d3.geo.equirectangular();
   this.path = d3.geo.path();
 
+  this.dispatch = dispatch;
   this.options = data.options || {};
   this.data = data;
 }
@@ -20,32 +21,24 @@ function Map(data) {
  * Initialize the map on the provided element.
  *
  * @param {Element} base SVG element holding the map.
+ * @param {Function} set add properties to SVG element.
  * @returns {Map} fluent interface
  * @api public
  */
-Map.prototype.initialize = function initialize(base) {
-  this.map = base.append('svg').attr('class', 'map');
-  this.chart = base.append('svg').attr('class', 'charts');
-
-  this.set(this.map, this.options.width * this.options.ratio, this.options.height);
-  this.set(this.chart, this.options.width * (1 - this.options.ratio), this.options.height);
+Map.prototype.initialize = function initialize(base, set) {
+  this.container = set(
+    base.append('svg').attr('class', 'map'),
+    this.options.width * this.options.ratio,
+    this.options.height
+  );
 
   this.path = this.path.projection(this.projection);
   this.projection = this.projection.scale(this.options.scale);
 
   this.draw();
-  this.registries = new Registry(this).initialize(this.map);
 
   return this;
 };
-
-Map.prototype.set = function set(svg, width, height) {
-  svg
-    .attr('width', width)
-    .attr('height', height)
-    .attr('viewBox', [0, 0, width, height].join(' '))
-    .attr('preserveAspectRatio', 'xMinYMin meet');
-}
 
 /**
  * Draw paths on the map under a svg group element.
@@ -54,7 +47,7 @@ Map.prototype.set = function set(svg, width, height) {
  * @api public
  */
 Map.prototype.draw = function draw(box) {
-  var world = this.map.append('g').attr('class', 'countries');
+  var world = this.container.append('g').attr('class', 'countries');
 
   world
     .selectAll('path')
@@ -76,35 +69,32 @@ Map.prototype.draw = function draw(box) {
   return this;
 };
 
-function Registry(map) {
+function Registries(data, dispatch, map) {
   this.map = map;
-  this.data = map.data;
+  this.dispatch = dispatch;
+  this.options = data.options || {};
+  this.data = data;
+
+  this.locations = map.container.append('g').attr('class', 'registries');
 }
 
-/**
- * Add circular indicators at all known mirror locations.
- *
- * @return {Map} fluent interface
- * @api public
- */
-Registry.prototype.initialize = function initialize(base) {
-  this.locations = base.append('g').attr('class', 'registries');
-  this.add();
-}
-
-Registry.prototype.add = function add() {
+Registries.prototype.add = function add(data, marker) {
   this.locations
     .selectAll('path')
-    .data(this.data.registry)
+    .data(data)
     .enter()
     .append('path')
-    .attr('id', function (datum) { return datum.id })
-    .attr('d', this.data.options.marker)
+    .attr('id', this.id)
+    .attr('d', marker)
     .attr('transform', this.translate.bind(this))
-    .on('click', this.change(this.charts))
+    .on('click', this.select(this))
 }
 
-Registry.prototype.translate = function translate(mirror) {
+Registries.prototype.id = function id(datum) {
+  return Object.keys(datum.names).join();
+}
+
+Registries.prototype.translate = function translate(mirror) {
   var xy = this.map.projection(mirror.lonlat);
   xy[0] = xy[0] - 21/2;
   xy[1] = xy[1] - 26; // TODO: use actual height/width of marker
@@ -112,17 +102,61 @@ Registry.prototype.translate = function translate(mirror) {
   return 'translate('+ xy.join() +')';
 };
 
-Registry.prototype.change = function show(charts) {
-  return function listen() {
-    console.log(this, charts);
+Registries.prototype.select = function select(registry) {
+  return function emit() {
+    registry.dispatch.select.apply(registry.dispatch, arguments);
   }
 }
+
+
+function Charts(data, dispatch) {
+  this.dispatch = dispatch;
+  this.options = data.options || {};
+  this.data = data;
+}
+
+Charts.prototype.initialize = function initialize(base, transform) {
+  this.container = transform(
+    base.append('svg').attr('class', 'charts'),
+    this.options.width * (1 - this.options.ratio),
+    this.options.height
+  );
+
+  return this;
+}
+
+Charts.prototype.select = function select(mirror) {
+  this.container.append('text').text(mirror.id).attr('y', 40);
+};
 
 //
 // Initialize the map from the data and options.
 //
 pipe.once('status::initialise', function (pipe, pagelet) {
-  var map = new Map(pagelet.data).initialize(
-    d3.select(pagelet.placeholders[0]).select('.row')
-  );
+  var dispatch = d3.dispatch('select')
+    , holder = d3.select(pagelet.placeholders[0]).select('.row')
+    , map = new Map(pagelet.data, dispatch).initialize(holder, transform)
+    , charts = new Charts(pagelet.data, dispatch).initialize(holder, transform)
+    , registries = new Registries(pagelet.data, dispatch, map).add(
+        pagelet.data.registries,
+        pagelet.data.options.marker
+      );
+
+  //
+  // If a location is selected update the charts.
+  //
+  dispatch.on('select', charts.select.bind(charts));
+
+  /**
+   * Transform SVG element.
+   */
+  function transform(element, width, height) {
+    element
+      .attr('width', width)
+      .attr('height', height)
+      .attr('viewBox', [0, 0, width, height].join(' '))
+      .attr('preserveAspectRatio', 'xMinYMin meet');
+
+    return element;
+  }
 });

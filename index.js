@@ -37,7 +37,7 @@ Pagelet.extend({
   //
   // Keys of the data that should be supplied to the client.
   //
-  query: [ 'world', 'options', 'registry' ],
+  query: [ 'world', 'options', 'registries' ],
 
   //
   // Load all the world data from JSON. This can be shipped with the actual pagelet
@@ -45,7 +45,7 @@ Pagelet.extend({
   //
   static: {
     world: require(path.join(__dirname, 'world.json')),
-    registry: require(path.join(__dirname, 'registries.json')),
+    registries: require(path.join(__dirname, 'registries.json')),
     options: {
       marker: marker,     // SVG path for map marker
       animation: 300,     // Amount of milliseconds an animation should take
