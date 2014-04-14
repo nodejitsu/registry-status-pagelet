@@ -1,6 +1,29 @@
+$base = #444
+
+.row
+  color: #444
+  font-family: "proxima-nova-1", "proxima-nova-2", sans-serif;
+  position: relative
+
 .countries
   fill: #2980b9
 
   for i in 1..10
     .hecta-{i}
       fill: lighten(@fill, i * 5%)
+
+.registries
+  path
+    fill: $base
+    stroke: #FEFEFE
+    stroke-width: 2
+
+.tooltip
+  absolute: top 0 left 0
+  background-color: rgba(255, 255, 255, 0.98)
+  border: 1px solid #444
+  border-radius: 5px
+  min-height: 50px
+  min-width: 200px
+  opacity: 0
+  z-index: 1

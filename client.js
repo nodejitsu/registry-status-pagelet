@@ -12,11 +12,7 @@ function Map(data) {
   this.projection = d3.geo.equirectangular();
   this.path = d3.geo.path();
 
-  data.options = data.options || {};
-  this.width = data.options.width;
-  this.height = data.options.height;
-  this.scale = data.options.scale;
-
+  this.options = data.options || {};
   this.data = data;
 }
 
@@ -28,16 +24,29 @@ function Map(data) {
  * @api public
  */
 Map.prototype.initialize = function initialize(base) {
-  this.svg = base.append('svg').attr('height', this.height).attr('width', this.width);
+  this.svg = base.append('svg')
+  this.chart = base.append('svg');
+
+  this.set(this.svg, this.options.width * this.options.ratio, this.options.height);
+  this.set(this.chart, this.options.width * (1 - this.options.ratio), this.options.height);
+
   this.path = this.path.projection(this.projection);
 
-  this.projection = this.projection.scale(this.scale).translate([
-    this.width / 2,
-    this.height / 2
-  ]);
+  this.projection = this.projection.scale(this.options.scale);
 
-  return this.draw().registries();
+  this.draw();
+  this.registries = new Registry(this).initialize(this.svg);
+
+  return this;
 };
+
+Map.prototype.set = function set(svg, width, height) {
+  svg
+    .attr('width', width)
+    .attr('height', height)
+    .attr('viewBox', [0, 0, width, height].join(' '))
+    .attr('preserveAspectRatio', 'xMinYMin meet');
+}
 
 /**
  * Draw paths on the map under a svg group element.
@@ -52,13 +61,15 @@ Map.prototype.draw = function draw() {
     .data(this.data.world.features)
     .enter()
     .append('path')
-    .attr('d', this.path)
-    .attr('class', function addClass() {
-      return 'hecta-' + Math.round(Math.random() * 10);
-    });
+    .attr('d', this.path);
 
   return this;
 };
+
+function Registry(map) {
+  this.map = map;
+  this.data = map.data;
+}
 
 /**
  * Add circular indicators at all known mirror locations.
@@ -66,34 +77,36 @@ Map.prototype.draw = function draw() {
  * @return {Map} fluent interface
  * @api public
  */
-Map.prototype.registries = function registries() {
-  this.locations = this.svg.append('g').attr('class', 'registries');
+Registry.prototype.initialize = function initialize(base) {
+  this.locations = base.append('g').attr('class', 'registries');
+  this.add();
+}
+
+Registry.prototype.add = function add() {
   this.locations
-    .selectAll('circle')
-    .data(this.data.registry.locations, this.convert.bind(this))
+    .selectAll('path')
+    .data(this.data.registry)
     .enter()
-    .append('circle')
-    .attr('r', this.data.options.radius);
+    .append('path')
+    .attr('id', function (datum) { return datum.id })
+    .attr('d', this.data.options.marker)
+    .attr('transform', this.translate.bind(this))
+    .on('click', this.change(this.charts))
+}
 
-  return this;
+Registry.prototype.translate = function translate(mirror) {
+  var xy = this.map.projection(mirror.lonlat);
+  xy[0] = xy[0] - 21/2;
+  xy[1] = xy[1] - 27; // TODO: use actual height/width of marker
+
+  return 'translate('+ xy.join() +')';
 };
 
-/**
- * Convert longitude and latitude to position in pixels.
- *
- * @param {Object} npm registry mirror information
- * @return {String} unique name of the mirror
- * @api public
- */
-Map.prototype.convert = function convert(mirror) {
-  if (!mirror.lonlat) throw new Error('No lon/lat for location');
-  var xy = this.projection(mirror.lonlat);
-
-  mirror.x = xy[0];
-  mirror.y = xy[1];
-
-  return mirror.id;
-};
+Registry.prototype.change = function show(charts) {
+  return function listen() {
+    console.log(this, charts);
+  }
+}
 
 //
 // Initialize the map from the data and options.

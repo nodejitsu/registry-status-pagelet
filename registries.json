@@ -1,44 +1,38 @@
-{
-  "locations": [
-    {
-      "id": "nodejitsu",
-      "name": "Nodejitsu.com mirror",
-      "lonlat": [30, 20]
-    },
-    {
-      "id": "strongloop",
-      "name": "Strongloop.com mirror",
-      "lonlat": [30, 20]
-    },
-    {
-      "id": "npmjsau",
-      "name": "Australian mirror",
-      "lonlat": [30, 20]
-    },
-    {
-      "id": "npmjseu",
-      "name": "European mirror",
-      "lonlat": [30, 20]
-    },
-    {
-      "id": "npmjs",
-      "name": "Main npm registry",
-      "lonlat": [30, 20]
-    },
-    {
-      "id": "cnpmjs",
-      "name": "Chinese mirror",
-      "lonlat": [30, 20]
-    },
-    {
-      "id": "fullfat",
-      "name": "Fullfat mirror",
-      "lonlat": [30, 20]
-    },
-    {
-      "id": "iriscouch",
-      "name": "Iriscouch mirror",
-      "lonlat": [30, 20]
+[
+  {
+    "id": "nodejitsu",
+    "name": "Nodejitsu.com mirror",
+    "lonlat": [-84.3915, 33.7516]
+  },
+  {
+    "id": "dallas",
+    "lonlat": [-96.8353, 32.9299],
+    "name": {
+      "iriscouch": "Iriscouch mirror",
+      "strongloop": "Strongloop.com mirror"
     }
-  ]
-}
+  },
+  {
+    "id": "npmjsau",
+    "name": "Australian mirror",
+    "lonlat": [151.03911, -33.95567]
+  },
+  {
+    "id": "npmjseu",
+    "name": "European mirror",
+    "lonlat": [11.07787, 49.45476]
+  },
+  {
+    "id": "npmjs",
+    "lonlat": [-122.3984, 37.7989],
+    "name": {
+      "npmjs": "Main npm registry",
+      "fullfat": "Fullfat mirror"
+    }
+  },
+  {
+    "id": "cnpmjs",
+    "name": "Chinese mirror",
+    "lonlat": [116.40753, 39.90403]
+  }
+]

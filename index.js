@@ -5,10 +5,20 @@ var path = require('path')
   , Contour = require('contour')
   , EventEmitter = require('events').EventEmitter;
 
+//
+// SVG representation of the map marker.
+//
+var marker = [
+  'm9,0c-4.9702,0 -9,4.0298 -9,9c0,2.02444 0.66797,3.89063',
+  '1.79592,5.39503l7.20408,9.60497l7.20412,-9.60497',
+  'c1.12791,-1.50441 1.79588,-3.37059 1.79588,-5.39503',
+  'c0,-4.9702 -4.0298,-9 -9,-9z'
+].join(' ');
+
+//
+// Extendt he pagelet with custom data.
+//
 Pagelet.extend({
-  //
-  // Specify the locations of our UI components.
-  //
   view: 'view.html',      // The template that gets rendered.
   css: 'css.styl',        // All CSS required to render this component.
   js: 'client.js',        // Progressive enhancements for the UI.
@@ -20,7 +30,8 @@ Pagelet.extend({
   dependencies: [
     '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js',
     '//cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js',
-    Contour.get('npm').grid
+    Contour.get('npm').grid,
+    Contour.get('npm').typography,
   ],
 
   //
@@ -36,10 +47,12 @@ Pagelet.extend({
     world: require(path.join(__dirname, 'world.json')),
     registry: require(path.join(__dirname, 'registries.json')),
     options: {
-      height: 600,
-      width: 1140,
-      scale: 200,
-      radius: 5
+      marker: marker,     // SVG path for map marker
+      animation: 300,     // Amount of milliseconds an animation should take
+      height: 600,        // Height of the widget in pixels
+      width: 1140,        // Width of the widget in pixels === grid.row
+      scale: 100,         // Relative scale of the map
+      ratio: 0.618        // Relative width the map can use
     }
   },
 
