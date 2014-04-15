@@ -41,19 +41,26 @@ Pagelet.extend({
 
   //
   // Load all the world data from JSON. This can be shipped with the actual pagelet
-  // as loading is asynchronous anyways, in regular pages this would cause severe
+  // as loading is asynchronous anyways.
   //
-  static: {
-    world: require(path.join(__dirname, 'world.json')),
-    registries: require(path.join(__dirname, 'registries.json')),
-    options: {
-      marker: marker,     // SVG path for map marker
-      animation: 300,     // Amount of milliseconds an animation should take
-      height: 400,        // Height of the widget in pixels
-      width: 1140,        // Width of the widget in pixels === grid.row
-      scale: 112,         // Relative scale of the map
-      ratio: 0.618        // Relative width the map can use
-    }
+  world: require(path.join(__dirname, 'world.json')),
+
+  //
+  // Registry data containing locations, IDs and human readable names.
+  //
+  registries: require(path.join(__dirname, 'registries.json')),
+
+  //
+  // Collection of options that will be used to render the SVG pagelet.
+  //
+  options: {
+    marker: marker,     // SVG path for map marker
+    animation: 1000,    // Amount of milliseconds an animation should take
+    height: 400,        // Height of the widget in pixels
+    width: 1140,        // Width of the widget in pixels === grid.row
+    margin: 40,         // Margin of the chart section
+    scale: 112,         // Relative scale of the map
+    ratio: 0.618        // Relative width the map can use
   },
 
   //
@@ -71,6 +78,6 @@ Pagelet.extend({
    * @api private
    */
   get: function get(next) {
-    next(null, this.static);
+    next(null, this);
   }
 }).on(module);
