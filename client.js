@@ -184,8 +184,9 @@ Charts.prototype.initialize = function initialize(base, transform) {
 
   //
   // Create ping chart.
+  // TODO: add charts per registry, hide which should not be active.
   //
-  this.addChart('ping', this.data.ping);
+  this.addChart('ping', this.data.ping.nodejitsu);
   //this.addChart('lag', this.data.lag);
 
   return this;
@@ -225,17 +226,18 @@ Charts.prototype.addChart = function addChart(name, data) {
 function Chart(name, container, data, options) {
   this.container = container;
   this.options = options = options || {};
+  this.data = [];
 
-  this.step = options.step || 6E4;      // Step size in milliseconds.
+  this.step = options.step || 3E4;      // Step size in milliseconds, 30 seconds.
   this.n = options.n || 180;            // Step per minute, e.g. 3 hours.
   this.now = Date.now();
 
   //
-  // Select the data range equal to the number of steps.
+  // Select the end of the data range equal to the number of steps.
+  // TODO: allow method to select data that should be used, e.g. mean is default now
   //
-  this.data = d3.range(data.length - this.n, data.length).map(function map(i) {
-    return data[i].value.mean;
-  });
+  var i = this.n < data.length ? this.n : data.length;
+  while (--i) { this.data.push(data[data.length - i].mean); }
 
   //
   // Construct all parts of the chart.
@@ -284,9 +286,9 @@ Chart.prototype.units = function units() {
 
 Chart.prototype.map = function map(id) {
   var container = this.container.append('g').attr('clip-path', 'url(#'+ id +')')
+    , visual = container.append('path').data([ this.data ]).attr('class', 'line')
     , chart = this;
 
-  var data = container.append('path').data([ this.data ]).attr('class', 'line');
   var line = d3.svg.line().interpolate('basis');
 
   line.x(function(d, i) {
@@ -298,8 +300,9 @@ Chart.prototype.map = function map(id) {
   });
 
   return {
-    data: line,
-    container: data,
+    stack: line,
+    visual: visual,
+    container: container,
   };
 };
 
@@ -314,9 +317,9 @@ Chart.prototype.animate = function animate(duration) {
   this.x.container.transition().duration(duration).ease('linear').call(this.x.axis);
 
   //
-  // Draw the line
+  // Draw the line and transition to the left.
   //
-  this.serie.container.attr('d', this.serie.data).attr('transform', null);
+  this.serie.visual.attr('d', this.serie.stack).attr('transform', null);
   this.serie.container.transition().duration(duration).ease('linear').attr(
     'transform',
     'translate(' + this.x.scale(now - (this.n - 1) * this.step) +')'
