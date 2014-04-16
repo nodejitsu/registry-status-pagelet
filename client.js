@@ -289,6 +289,13 @@ Chart.prototype.visuals = function visuals() {
     'translate('+ this.options.width * (1 - this.options.ratio) +',0)'
   );
 
+  //
+  // Define rectangular clipping area that will hide the path.
+  //
+  this.chart.append('defs').append('clipPath').attr('id', this.name).append('rect')
+    .attr('width', options.width)
+    .attr('height', options.height);
+
   this.x = this.time(this.chart, options);
   this.y = this.units(this.chart, options);
   this.serie = this.map(this.chart);
