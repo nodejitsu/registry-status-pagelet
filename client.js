@@ -189,7 +189,7 @@ Charts.prototype.initialize = function initialize(base, transform) {
   // Create ping chart.
   // TODO: add charts per registry, hide which should not be active.
   //
-  this.addChart('ping', this.data.ping.nodejitsu, this.options.ping);
+  this.addChart('ping', this.data.status.ping.nodejitsu, this.options.ping);
   //this.addChart('lag', this.data.lag);
 
   return this;

@@ -2,8 +2,7 @@
 
 var path = require('path')
   , Pagelet = require('pagelet')
-  , Contour = require('contour')
-  , EventEmitter = require('events').EventEmitter;
+  , Contour = require('contour');
 
 //
 // SVG representation of the map marker.
@@ -37,7 +36,7 @@ Pagelet.extend({
   //
   // Keys of the data that should be supplied to the client.
   //
-  query: [ 'world', 'options', 'registries' ],
+  query: [ 'world', 'options', 'registries', 'status' ],
 
   //
   // Load all the world data from JSON. This can be shipped with the actual pagelet
@@ -85,7 +84,11 @@ Pagelet.extend({
   // something like the npm-probe module to collect data from each of the npm
   // mirrors and the main npm registry itself.
   //
-  collector: new EventEmitter,
+  // TODO: client makes assumptions about data structure, render should work without
+  //
+  status: {
+    ping: {}
+  },
 
   /**
    * Prepare the data for rendering. All the data that is send to the callback
@@ -96,5 +99,5 @@ Pagelet.extend({
    */
   get: function get(next) {
     next(null, this);
-  }
+  },
 }).on(module);
