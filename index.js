@@ -58,9 +58,25 @@ Pagelet.extend({
     animation: 1000,    // Amount of milliseconds an animation should take
     height: 400,        // Height of the widget in pixels
     width: 1140,        // Width of the widget in pixels === grid.row
-    margin: 40,         // Margin of the chart section
     scale: 112,         // Relative scale of the map
-    ratio: 0.618        // Relative width the map can use
+    ratio: 0.618,       // Relative width the map can use
+
+    //
+    // Margin of the chart section according to d3 margin conventions
+    //
+    margin: {
+      top: 20,
+      right: 40,
+      bottom: 20,
+      left: 40
+    },
+
+    //
+    // Ping chart specific options.
+    //
+    ping: {
+      title: 'Average response time'
+    }
   },
 
   //

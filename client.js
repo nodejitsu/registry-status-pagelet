@@ -178,15 +178,17 @@ Charts.prototype.initialize = function initialize(base, transform) {
   //
   // Create new SVG element for all charts.
   //
-  base = base.append('svg').attr('class', 'charts');
-  this.container = transform(base, this.width, this.options.height);
-  this.defs = base.append('defs');
+  this.container = transform(
+    base.append('svg').attr('class', 'charts'),
+    this.width,
+    this.options.height
+  );
 
   //
   // Create ping chart.
   // TODO: add charts per registry, hide which should not be active.
   //
-  this.addChart('ping', this.data.ping.nodejitsu);
+  this.addChart('ping', this.data.ping.nodejitsu, this.options.ping);
   //this.addChart('lag', this.data.lag);
 
   return this;
@@ -202,25 +204,34 @@ Charts.prototype.select = function select(mirror) {
   this.container.append('text').text(mirror.id).attr('y', 40);
 };
 
-Charts.prototype.addChart = function addChart(name, data) {
+Charts.prototype.addChart = function addChart(name, data, options) {
   var container = this.container.append('g').attr('class', name)
-    , width = this.width - (this.options.margin * 2)
-    , height = this.options.height / 5;
+    , width = this.width - this.options.margin.left - this.options.margin.right
+    , height = this.options.height / 5
+    , vertical = Object.keys(this.stack).length * height + this.options.margin.top
+    , translate = [ this.options.margin.left, vertical ].join();
 
   //
   // Translate the graph to the proper place and define a drawable area on
   // the chart defined by clip path.
   //
-  container.attr('transform', 'translate('+ this.options.margin +',0)');
-  this.defs.append('clipPath').attr('id', name).append('rect')
+  container.attr('transform', 'translate('+ translate +')');
+  container.append('defs').append('clipPath').attr('id', name).append('rect')
     .attr('width', width)
     .attr('height', height);
 
-  this.stack[name] = new Chart(name, container, data, {
-    height: height,
-    width: width,
-    animation: this.options.animation
-  });
+  //
+  // Add some options that are forced from the charts SVG container.
+  //
+  options = options || {};
+  options.height = height;
+  options.width = width;
+  options.animation = this.options.animation;
+
+  //
+  // Initialize the chart and add it to the stack for reference.
+  //
+  this.stack[name] = new Chart(name, container, data, options);
 };
 
 function Chart(name, container, data, options) {
@@ -228,8 +239,8 @@ function Chart(name, container, data, options) {
   this.options = options = options || {};
   this.data = [];
 
-  this.step = options.step || 3E4;      // Step size in milliseconds, 30 seconds.
-  this.n = options.n || 180;            // Step per minute, e.g. 3 hours.
+  this.step = options.step || 18E4;     // Step size in milliseconds, 3 minutes.
+  this.n = options.n || 60;             // Steps, e.g. 3 hours.
   this.now = Date.now();
 
   //
@@ -242,6 +253,7 @@ function Chart(name, container, data, options) {
   //
   // Construct all parts of the chart.
   //
+  this.title();
   this.x = this.time();
   this.y = this.units();
   this.serie = this.map(name);
@@ -251,6 +263,18 @@ function Chart(name, container, data, options) {
   //
   this.animate(options.animation);
 }
+
+/**
+ * Append a title to the chart.
+ *
+ * @api private
+ */
+Chart.prototype.title = function title() {
+  this.container.append('text')
+    .text(this.options.title)
+    .attr('class', 'title')
+    .attr('transform', 'translate(10,10)');
+};
 
 Chart.prototype.time = function time() {
   var scale = d3.time.scale().range([0, this.options.width])
@@ -267,7 +291,7 @@ Chart.prototype.time = function time() {
   // Add the scale to the axis and force a tick per hour.
   //
   return {
-    scale: scale.domain([this.now - this.n * this.step, this.now + 15 * this.step]).nice(),
+    scale: scale.domain([this.now - this.n * this.step, this.now]),
     axis: axis.scale(scale).ticks(6),
     container: container.call(axis)
   };
@@ -275,12 +299,18 @@ Chart.prototype.time = function time() {
 
 Chart.prototype.units = function units() {
   var scale = d3.scale.linear().range([this.options.height, 0])
-    , axis = d3.svg.axis().orient('left');
+    , axis = d3.svg.axis().orient('right')
+    , container = this.container.append('g').attr('class', 'y axis');
+
+  //
+  // Translate the axis to the right of the chart.
+  //
+  container.attr('transform', 'translate('+ this.options.width +',0)');
 
   return {
     scale: scale.domain([0, d3.max(this.data)]).nice(),
     axis: axis.scale(scale).ticks(5),
-    container: this.container.append('g').attr('class', 'y axis').call(axis)
+    container: container.call(axis)
   };
 };
 
@@ -313,16 +343,16 @@ Chart.prototype.animate = function animate(duration) {
   //
   // Animate the time axis.
   //
-  this.x.scale.domain([now - this.n * this.step, now + 15 * this.step]).nice();
+  this.x.scale.domain([now - this.n * this.step, now]);
   this.x.container.transition().duration(duration).ease('linear').call(this.x.axis);
 
   //
   // Draw the line and transition to the left.
   //
   this.serie.visual.attr('d', this.serie.stack).attr('transform', null);
-  this.serie.container.transition().duration(duration).ease('linear').attr(
+  this.serie.visual.transition().duration(duration).ease('linear').attr(
     'transform',
-    'translate(' + this.x.scale(now - (this.n - 1) * this.step) +')'
+    'translate(' + this.x.scale(now - this.n * this.step) +')'
   );
 
   setTimeout(function loop() {
