@@ -65,17 +65,18 @@ Pagelet.extend({
     // Margin of the chart section according to d3 margin conventions
     //
     margin: {
-      top: 20,
-      right: 40,
+      top: 10,
+      right: 50,
       bottom: 20,
-      left: 40
+      left: 20
     },
 
     //
     // Ping chart specific options.
     //
     ping: {
-      title: 'Average response time'
+      title: 'Response time',
+      unit: 'ms'
     }
   },
 

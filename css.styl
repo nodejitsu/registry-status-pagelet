@@ -1,8 +1,11 @@
 $base = #444
+$blue = #2980b9
 $highlight = #f4f4f4
 
 .charts
-  background-color: $highlight
+  border-left: 5px solid $highlight
+  border-top-right-radius: 10px
+  border-bottom-right-radius: 10px
 
   .axis
     line
@@ -12,11 +15,18 @@ $highlight = #f4f4f4
       stroke-width: 1.25
 
   text
-    font-size: 11px
+    font-size: 14px
+
+  .value
+    font-size: 40px
+    font-weight: bold
+    fill: $blue
 
   .title
-    font-size: 12px
+    font-size: 14px
     font-weight: bold
+    text-transform: uppercase
+    fill: #999
 
 .row
   color: #444
@@ -24,7 +34,7 @@ $highlight = #f4f4f4
   position: relative
 
 .countries
-  fill: #2980b9
+  fill: $blue
 
   for i in 1..10
     .hecta-{i}
@@ -40,7 +50,7 @@ $highlight = #f4f4f4
 .line
   fill: transparent
   stroke: $base
-  stroke-width: 1
+  stroke-width: 2
 
 .tooltip
   absolute: top 0 left 0
