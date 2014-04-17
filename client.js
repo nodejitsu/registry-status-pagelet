@@ -187,10 +187,17 @@ Charts.prototype.initialize = function initialize(base, transform) {
 
   //
   // Create ping chart.
-  // TODO: add charts per registry, hide which should not be active.
+  // TODO: hide graphs which should not be active.
   //
-  this.addChart('ping', this.data.status.ping.nodejitsu, this.options.ping);
-  //this.addChart('lag', this.data.lag);
+  for (var type in this.data.status) {
+    for (var registry in this.data.status[type]) {
+      this.addChart(
+        this.name(type, registry),
+        this.data.status[type][registry],
+        this.options[type]
+      );
+    }
+  }
 
   return this;
 };
@@ -233,6 +240,39 @@ Charts.prototype.addChart = function addChart(name, data, options) {
   this.stack[name] = new Chart(name, container, data, options);
 };
 
+/**
+ * Create unique identifier for a chart based on data type and registry name.
+ *
+ * @param {String} type Data type, per example ping.
+ * @param {String} registry Name of the registry, per example nodejitsu.
+ * @return {String} unique identifier
+ * @api public
+ */
+Charts.prototype.name = function name(type, registry) {
+  return type + ':' + registry;
+};
+
+/**
+ * Append data to the chart identified by probe.
+ *
+ * @param {Object} probe Specifications for the chart and data.
+ * @api private
+ */
+Charts.prototype.affix = function affix(probe) {
+  var name = this.name(probe.name, probe.registry);
+  this.stack[name].update(probe.results.mean);
+};
+
+/**
+ * Create new chart.
+ *
+ * @constructor
+ * @param {[type]} name      [description]
+ * @param {[type]} container [description]
+ * @param {[type]} data      [description]
+ * @param {[type]} options   [description]
+ * @api public
+ */
 function Chart(name, container, data, options) {
   this.container = container;
   this.options = options = options || {};
@@ -268,11 +308,17 @@ Chart.prototype.statistics = function statistics() {
     'translate(0,10)'
   );
 
-  this.title(this.stats, this.options.title);
-  this.current(
-    this.stats,
-    Math.round(this.data[this.data.length - 1]) +' '+ this.options.unit
-  );
+  //
+  // Add a title and unit.
+  //
+  this.text(this.stats, this.options.title, 'title', [100, 0]);
+  this.text(this.stats, this.options.unit, 'unit', [125, 40]);
+
+  //
+  // Display the most recent data left of the chart, text is aligned to the right.
+  //
+  this.last = this.text(this.stats, 0, 'value', [100, 40]);
+  this.current(this.data[this.data.length - 1], this.options.animation);
 };
 
 Chart.prototype.visuals = function visuals() {
@@ -302,19 +348,34 @@ Chart.prototype.visuals = function visuals() {
 };
 
 /**
- * Append a title to the chart.
+ * Append a text to the chart, element will be updated if the class is not unique.
  *
  * @api private
  */
-Chart.prototype.title = function title(base, text) {
-  return base.append('text').text(text).attr('class', 'title');
+Chart.prototype.text = function text(base, value, className, translate, left) {
+  var sel = base.select('.' + className);
+
+  //
+  // Create text element if it does not exist and translate if provided.
+  //
+  if (sel.empty()) sel = base.append('text').attr('class', className);
+  if (translate) sel.attr('transform', 'translate('+ translate.join() +')');
+  if (!left) sel.attr('text-anchor', 'end');
+
+  //
+  // Update the content of the element.
+  //
+  return sel.text(value);
 };
 
-Chart.prototype.current = function current(base, value) {
-  return base.append('text').text(value).attr('class', 'value').attr(
-    'transform',
-    'translate(0, 40)'
-  );
+Chart.prototype.current = function current(value, duration) {
+  this.last.transition().duration(duration).tween('text', function tween() {
+    var i = d3.interpolate(this.textContent, Math.round(value));
+
+    return function loop(t) {
+      this.textContent = Math.round(i(t));
+    };
+  });
 };
 
 Chart.prototype.time = function time(base, options) {
@@ -377,15 +438,31 @@ Chart.prototype.map = function map(base) {
   };
 };
 
+Chart.prototype.update = function update(data) {
+  this.data.push(data);
+
+  //
+  // Update the axis and the latest shown visual
+  //
+  this.current(data, this.options.animation);
+  this.animate(this.options.animation);
+
+  //
+  // Pop older data of the stack.
+  //
+  this.data.shift();
+};
+
 Chart.prototype.animate = function animate(duration) {
   var now = Date.now()
     , chart = this;
 
   //
-  // Animate the time axis.
+  // Animate the time axis and update the domain of the y axis
   //
   this.x.scale.domain([now - this.n * this.step, now]);
   this.x.container.transition().duration(duration).ease('linear').call(this.x.axis);
+  this.y.scale.domain([0, d3.max(this.data)]).nice();
 
   //
   // Draw the line and transition to the left.
@@ -395,10 +472,6 @@ Chart.prototype.animate = function animate(duration) {
     'transform',
     'translate(' + this.x.scale(now - this.n * this.step) +')'
   );
-
-  setTimeout(function loop() {
-    chart.animate(duration);
-  }, this.step);
 };
 
 //
@@ -418,6 +491,7 @@ pipe.once('status::initialise', function (pipe, pagelet) {
   // If a location is selected update the charts.
   //
   dispatch.on('select', charts.select.bind(charts));
+  pipe.stream.on('data', charts.affix.bind(charts));
 
   /**
    * Transform an SVG element and set visual attributes.
