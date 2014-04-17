@@ -91,6 +91,7 @@ function Registries(data, dispatch, map) {
   this.data = data;
 
   this.locations = map.container.append('g').attr('class', 'registries');
+  this.tooltip = d3.select('.tooltip');
 }
 
 /**
@@ -146,8 +147,50 @@ Registries.prototype.translate = function translate(registry) {
  * @api public
  */
 Registries.prototype.select = function select(registry) {
-  return function emit() {
-    registry.dispatch.select.apply(registry.dispatch, arguments);
+  var duration = this.options.animation / 2
+    , registries = this
+    , position
+    , names;
+
+  //
+  // Create event listener.
+  //
+  return function emit(mirror) {
+    //
+    // Hide the tooltip to start fresh.
+    //
+    registries.tooltip.transition().duration(duration / 2).style({ opacity: 0 });
+
+    //
+    // Get the names from the mirror or the provided element.
+    //
+    names = mirror ? Object.keys(mirror.names) : [this.id];
+    if (names.length === 1) return registry.dispatch.select(names[0]);
+
+    //
+    // Set the location of the div to the mouse location relative to the SVG.
+    //
+    position = d3.mouse(registries.map.container[0][0]);
+    names = names.reduce(function reduce(html, id) {
+      return html + '<li id="'+ id +'">'+ mirror.names[id] +'</li>';
+    }, '<ul>') + '</ul>';
+
+    //
+    // Replace innerHTML of the tooltip with all registry names.
+    //
+    registries.tooltip.html(names).style({
+      left: position[0] + 'px',
+      top: position[1] + 40 + 'px'
+    });
+
+    //
+    // Fade in and add/replace listeners on the tooltips.
+    //
+    registries.tooltip.selectAll('ul li').on('click', emit);
+    registries.tooltip.transition().duration(duration).style({
+      left: position[0] + 15 + 'px',
+      opacity: 1
+    });
   };
 };
 
@@ -218,13 +261,11 @@ Charts.prototype.initialize = function initialize(base, transform) {
  *
  * TODO: let the user choose the registry via popup that will provide the correct id.
  *
- * @param {Object} mirror
+ * @param {String} id Registry ID matching the className of the chart group.
  * @api public
  */
-Charts.prototype.select = function select(mirror) {
-  var id = Object.keys(mirror.names).join();
-
-  this.container.selectAll('.registry').classed('show', false)
+Charts.prototype.select = function select(id) {
+  this.container.selectAll('.registry').classed('show', false);
   this.container.select('.' + id).classed('show', true);
 };
 
