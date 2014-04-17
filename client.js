@@ -65,7 +65,7 @@ Map.prototype.draw = function draw() {
   //
   this.projection = this.projection.translate([
     world[0][0].getBoundingClientRect().width / 2,
-    this.options.height / 2
+    this.options.height / 1.8  // pretty arbitrary value, exact ratio unknown?
   ]);
 
   //
