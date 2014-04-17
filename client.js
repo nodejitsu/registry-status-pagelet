@@ -344,10 +344,11 @@ Chart.prototype.statistics = function statistics() {
  * @api private
  */
 Chart.prototype.visuals = function visuals() {
-  var options = {
-    width: this.options.width * this.options.ratio,
-    height: this.options.height
-  };
+  var visual = this.options.visual in this ? this.options.visual : 'line'
+    , options = {
+      width: this.options.width * this.options.ratio,
+      height: this.options.height
+    };
 
   //
   // Transform the chart to the right so there is room for the statistics.
@@ -369,7 +370,7 @@ Chart.prototype.visuals = function visuals() {
   //
   this.x = this.time(this.chart, options);
   this.y = this.units(this.chart, options);
-  this.serie = this.map(this.chart);
+  this.serie = this[visual](this.chart);
 };
 
 /**

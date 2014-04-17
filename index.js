@@ -75,6 +75,7 @@ Pagelet.extend({
     //
     ping: {
       title: 'Response time',
+      visual: 'line',
       unit: 'ms'
     }
   },
