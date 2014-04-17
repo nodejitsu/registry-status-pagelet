@@ -138,10 +138,12 @@ Registries.prototype.translate = function translate(registry) {
 };
 
 /**
- * Register event listener for registry selection.
+ * Register event listener for registry selection. This will dispatch an event
+ * that will be listened to from the charts collection.
  *
  * @param {Object} registry Reference to self
  * @return {Function} listener.
+ * @api public
  */
 Registries.prototype.select = function select(registry) {
   return function emit() {
@@ -191,7 +193,7 @@ Charts.prototype.initialize = function initialize(base, transform) {
   //
   for (var type in this.data.status) {
     for (var registry in this.data.status[type]) {
-      this.addChart(
+      this.add(
         this.name(type, registry),
         this.data.status[type][registry],
         this.options[type]
@@ -203,7 +205,7 @@ Charts.prototype.initialize = function initialize(base, transform) {
 };
 
 /**
- * Handle selection of npm registry.
+ * Handle selection of npm registry. Hide charts and data but the selected registry.
  *
  * @param {Object} mirror
  * @api public
@@ -212,7 +214,16 @@ Charts.prototype.select = function select(mirror) {
   this.container.append('text').text(mirror.id).attr('y', 40);
 };
 
-Charts.prototype.addChart = function addChart(name, data, options) {
+/**
+ * Add a new chart to the collection. The dimensions, placement and some options
+ * will be preconfigured for a nice visual layout.
+ *
+ * @param {String} name Unique identifier, will be used to store a reference.
+ * @param {Array} data Collection of data object.
+ * @param {Object} options
+ * @api public
+ */
+Charts.prototype.add = function add(name, data, options) {
   var container = this.container.append('g').attr('class', name)
     , width = this.width - this.options.margin.left - this.options.margin.right
     , height = this.options.height / 5
@@ -258,19 +269,19 @@ Charts.prototype.name = function name(type, registry) {
  * @param {Object} probe Specifications for the chart and data.
  * @api private
  */
-Charts.prototype.affix = function affix(probe) {
+Charts.prototype.append = function append(probe) {
   var name = this.name(probe.name, probe.registry);
   this.stack[name].update(probe.results.mean);
 };
 
 /**
- * Create new chart.
+ * Create a new chart instance.
  *
  * @constructor
- * @param {[type]} name      [description]
- * @param {[type]} container [description]
- * @param {[type]} data      [description]
- * @param {[type]} options   [description]
+ * @param {String} name Unique identifier.
+ * @param {Element} SVG element that holds the chart's elements
+ * @param {Array} data Collection of data points.
+ * @param {Object} options
  * @api public
  */
 function Chart(name, container, data, options) {
@@ -281,14 +292,14 @@ function Chart(name, container, data, options) {
 
   this.step = options.step || 18E4;     // Step size in milliseconds, 3 minutes.
   this.n = options.n || 40;             // Steps, e.g. 2 hours.
-  this.now = Date.now();
+  this.now = Date.now();                // Used for the domain of the x-axis.
+  this.key = options.key || 'mean';     // Data key used for displaying data.
 
   //
   // Select the end of the data range equal to the number of steps.
-  // TODO: allow method to select data that should be used, e.g. mean is default now
   //
   var i = this.n < data.length ? this.n : data.length;
-  while (--i) { this.data.push(data[data.length - i].mean); }
+  while (--i) { this.data.push(data[data.length - i][this.key]); }
 
   //
   // Construct all parts of the chart.
@@ -302,6 +313,12 @@ function Chart(name, container, data, options) {
   this.animate(options.animation);
 }
 
+/**
+ * Add staticstics container to the chart. This contains the metric's name, unit
+ * and most recent value.
+ *
+ * @api private
+ */
 Chart.prototype.statistics = function statistics() {
   this.stats = this.container.append('g').attr('class', 'stats').attr(
     'transform',
@@ -318,9 +335,14 @@ Chart.prototype.statistics = function statistics() {
   // Display the most recent data left of the chart, text is aligned to the right.
   //
   this.last = this.text(this.stats, 0, 'value', [100, 40]);
-  this.current(this.data[this.data.length - 1], this.options.animation);
+  this.current(this.last, this.data[this.data.length - 1], this.options.animation);
 };
 
+/**
+ * Create the actual chart graphics.
+ *
+ * @api private
+ */
 Chart.prototype.visuals = function visuals() {
   var options = {
     width: this.options.width * this.options.ratio,
@@ -342,13 +364,18 @@ Chart.prototype.visuals = function visuals() {
     .attr('width', options.width)
     .attr('height', options.height);
 
+  //
+  // Add the axes and data serie.
+  //
   this.x = this.time(this.chart, options);
   this.y = this.units(this.chart, options);
   this.serie = this.map(this.chart);
 };
 
 /**
- * Append a text to the chart, element will be updated if the class is not unique.
+ * Append text to the chart, the element will be updated if the class is
+ * not unique within the current container. Although IDs seem more
+ * appropriate in this case CSS can easily be applied to all classes.
  *
  * @api private
  */
@@ -368,8 +395,16 @@ Chart.prototype.text = function text(base, value, className, translate, left) {
   return sel.text(value);
 };
 
-Chart.prototype.current = function current(value, duration) {
-  this.last.transition().duration(duration).tween('text', function tween() {
+/**
+ * Do a fancy update of the most recent metric. Tween will ensure that the numbers
+ * are visually incremented or decremented via interpolate.
+ *
+ * @param {Number} value Update to this number.
+ * @param {} duration Animation duration.
+ * @api public
+ */
+Chart.prototype.current = function current(base, value, duration) {
+  base.transition().duration(duration).tween('text', function tween() {
     var i = d3.interpolate(this.textContent, Math.round(value));
 
     return function loop(t) {
@@ -378,6 +413,14 @@ Chart.prototype.current = function current(value, duration) {
   });
 };
 
+/**
+ * Add horizontal x-axis to the chart.
+ *
+ * @param {Element} base container for the axis.
+ * @param {Object} options
+ * @return {Object} reference to constructed parts of the axis.
+ * @api public
+ */
 Chart.prototype.time = function time(base, options) {
   var scale = d3.time.scale().range([0, options.width])
     , axis = d3.svg.axis().orient('bottom').tickFormat(d3.time.format('%-H:%M'))
@@ -399,6 +442,14 @@ Chart.prototype.time = function time(base, options) {
   };
 };
 
+/**
+ * Add vertical y-axis to the chart.
+ *
+ * @param {Element} base container for the axis.
+ * @param {Object} options
+ * @return {Object} reference to constructed parts of the axis.
+ * @api public
+ */
 Chart.prototype.units = function units(base, options) {
   var scale = d3.scale.linear().range([options.height, 0])
     , axis = d3.svg.axis().orient('right')
@@ -416,43 +467,60 @@ Chart.prototype.units = function units(base, options) {
   };
 };
 
-Chart.prototype.map = function map(base) {
+/**
+ * Add line with basic interpolation to the chart.
+ *
+ * @param {Element} base Container for the line.
+ * @return {Object} reference to constructed parts of the axis.
+ * @api public
+ */
+Chart.prototype.line = function line(base) {
   var container = base.append('g').attr('clip-path', 'url(#'+ this.name +')')
     , visual = container.append('path').data([ this.data ]).attr('class', 'line')
+    , serie = d3.svg.line().interpolate('basis')
     , chart = this;
 
-  var line = d3.svg.line().interpolate('basis');
-
-  line.x(function(d, i) {
+  serie.x(function serieX(d, i) {
     return chart.x.scale(chart.now - (chart.n - 1 - i) * chart.step);
   });
 
-  line.y(function(d, i) {
+  serie.y(function serieY(d, i) {
     return chart.y.scale(d);
   });
 
   return {
-    stack: line,
-    visual: visual,
-    container: container,
+    stack: serie,
+    container: visual
   };
 };
 
+/**
+ * Update the chart data and trigger animations on the chart.
+ *
+ * @param {Object} data Single metric to append to the data.
+ * @api public
+ */
 Chart.prototype.update = function update(data) {
   this.data.push(data);
 
   //
-  // Update the axis and the latest shown visual
+  // Update the axes and last shown metric.
   //
-  this.current(data, this.options.animation);
+  this.current(this.last, data, this.options.animation);
   this.animate(this.options.animation);
 
   //
-  // Pop older data of the stack.
+  // Pop oldest metric of the stack.
   //
   this.data.shift();
 };
 
+/**
+ * Animate the whole chart for the provided duration.
+ *
+ * @param {Number} duration Animation duration.
+ * @api private
+ */
 Chart.prototype.animate = function animate(duration) {
   var now = Date.now()
     , chart = this;
@@ -467,8 +535,8 @@ Chart.prototype.animate = function animate(duration) {
   //
   // Draw the line and transition to the left.
   //
-  this.serie.visual.attr('d', this.serie.stack).attr('transform', null);
-  this.serie.visual.transition().duration(duration).ease('linear').attr(
+  this.serie.container.attr('d', this.serie.stack).attr('transform', null);
+  this.serie.container.transition().duration(duration).ease('linear').attr(
     'transform',
     'translate(' + this.x.scale(now - this.n * this.step) +')'
   );
@@ -488,10 +556,11 @@ pipe.once('status::initialise', function (pipe, pagelet) {
       );
 
   //
-  // If a location is selected update the charts.
+  // If a specific location is selected update the charts, on receiving new
+  // data append the latest metric to the charts.
   //
   dispatch.on('select', charts.select.bind(charts));
-  pipe.stream.on('data', charts.affix.bind(charts));
+  pipe.stream.on('data', charts.append.bind(charts));
 
   /**
    * Transform an SVG element and set visual attributes.
