@@ -160,9 +160,11 @@ Registries.prototype.select = function select(registry) {
  * @api public
  */
 function Charts(data, dispatch) {
-  this.options = data.options || {};
-  this.data = data;
+  data.options = data.options || {};
+  data.options.width = data.options.width * (1 - data.options.ratio);
 
+  this.data = data;
+  this.options = data.options;
   this.dispatch = dispatch;
   this.stack = {};
 }
@@ -175,7 +177,7 @@ function Charts(data, dispatch) {
  * @return {Chart} fluent interface
  */
 Charts.prototype.initialize = function initialize(base, transform) {
-  this.width = this.options.width * (1 - this.options.ratio);
+  var groups = {};
 
   //
   // Create new SVG element for all charts, the width is adjusting for border width
@@ -183,17 +185,24 @@ Charts.prototype.initialize = function initialize(base, transform) {
   //
   this.container = transform(
     base.append('svg').attr('class', 'charts'),
-    this.width - 10,
+    this.options.width - 10,
     this.options.height
   );
 
   //
-  // Create ping chart.
-  // TODO: hide graphs which should not be active.
+  // Create groups per per registry and add charts per data type.
   //
   for (var type in this.data.status) {
     for (var registry in this.data.status[type]) {
+      if (!(registry in groups)) {
+        groups[registry] = this.container.append('g').attr(
+          'class',
+          'registry ' + registry
+        );
+      }
+
       this.add(
+        groups[registry],
         this.name(type, registry),
         this.data.status[type][registry],
         this.options[type]
@@ -218,16 +227,17 @@ Charts.prototype.select = function select(mirror) {
  * Add a new chart to the collection. The dimensions, placement and some options
  * will be preconfigured for a nice visual layout.
  *
- * @param {String} name Unique identifier, will be used to store a reference.
+ * @param {Element} group
+ * @param {String} name Unique identifier.
  * @param {Array} data Collection of data object.
  * @param {Object} options
  * @api public
  */
-Charts.prototype.add = function add(name, data, options) {
-  var container = this.container.append('g').attr('class', name)
-    , width = this.width - this.options.margin.left - this.options.margin.right
+Charts.prototype.add = function add(base, name, data, options) {
+  var container = base.append('g').attr('class', name)
+    , width = this.options.width - this.options.margin.left - this.options.margin.right
     , height = this.options.height / 5
-    , vertical = Object.keys(this.stack).length * height + this.options.margin.top
+    , vertical = (base.selectAll('.registry').length - 1) * height + this.options.margin.top
     , translate = [ this.options.margin.left, vertical ].join();
 
   //
@@ -562,6 +572,12 @@ pipe.once('status::initialise', function (pipe, pagelet) {
   //
   dispatch.on('select', charts.select.bind(charts));
   pipe.stream.on('data', charts.append.bind(charts));
+
+  //
+  // Show npmjs.org main registry by default, yes I know not
+  // even the nodejitsu mirror first, weird huh ;)
+  //
+  holder.select('.npmjs').classed('show', true);
 
   /**
    * Transform an SVG element and set visual attributes.
