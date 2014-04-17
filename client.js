@@ -216,11 +216,16 @@ Charts.prototype.initialize = function initialize(base, transform) {
 /**
  * Handle selection of npm registry. Hide charts and data but the selected registry.
  *
+ * TODO: let the user choose the registry via popup that will provide the correct id.
+ *
  * @param {Object} mirror
  * @api public
  */
 Charts.prototype.select = function select(mirror) {
-  this.container.append('text').text(mirror.id).attr('y', 40);
+  var id = Object.keys(mirror.names).join();
+
+  this.container.selectAll('.registry').classed('show', false)
+  this.container.select('.' + id).classed('show', true);
 };
 
 /**
