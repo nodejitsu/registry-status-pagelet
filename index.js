@@ -86,7 +86,9 @@ Pagelet.extend({
       ticks: { x: 7, y: 5 },
       title: 'Replication lag',
       visual: 'heatmap',
-      unit: 'hours'
+      unit: 'hours',
+      step: 864E5,      // Step size of one day
+      n: 10
     }
   },
 

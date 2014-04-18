@@ -242,10 +242,10 @@ Charts.prototype.initialize = function initialize(base, transform) {
   for (var type in this.data.status) {
     for (var registry in this.data.status[type]) {
       if (!(registry in groups)) {
-        groups[registry] = this.container.append('g').attr(
-          'class',
-          'registry ' + registry
-        );
+        groups[registry] = this.container.append('g').attr({
+          class: 'registry ' + registry,
+          transform: 'translate(0,' + this.options.margin.top + ')'
+        });
       }
 
       this.add(
@@ -540,7 +540,6 @@ Chart.prototype.grid = function grid(base, options, vertical) {
   //
   // Add the lines.
   //
-  console.log(axis);
   base
     .selectAll('.grid.' + axis)
     .data(chart[axis].scale.ticks(chart.options.ticks[axis]))
