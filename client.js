@@ -159,7 +159,10 @@ Registries.prototype.select = function select(registry) {
     //
     // Hide the tooltip to start fresh.
     //
-    registries.tooltip.transition().duration(duration / 2).style({ opacity: 0 });
+    registries.tooltip.transition().duration(duration / 2).style({
+      opacity: 0,
+      display: 'none'
+    });
 
     //
     // Get the names from the mirror or the provided element.
@@ -189,7 +192,8 @@ Registries.prototype.select = function select(registry) {
     registries.tooltip.selectAll('ul li').on('click', emit);
     registries.tooltip.transition().duration(duration).style({
       left: position[0] + 15 + 'px',
-      opacity: 1
+      opacity: 1,
+      display: 'block'
     });
   };
 };
