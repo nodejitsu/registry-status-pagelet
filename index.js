@@ -65,7 +65,7 @@ Pagelet.extend({
     //
     margin: {
       top: 10,
-      right: 50,
+      right: 60,
       bottom: 20,
       left: 20
     },
@@ -74,9 +74,19 @@ Pagelet.extend({
     // Ping chart specific options.
     //
     ping: {
+      grid: { horizontal: true },
+      ticks: { x: 4, y: 4 },
       title: 'Response time',
       visual: 'line',
       unit: 'ms'
+    },
+
+    delta: {
+      grid: { horizontal: true, vertical: true },
+      ticks: { x: 7, y: 5 },
+      title: 'Replication lag',
+      visual: 'heatmap',
+      unit: 'hours'
     }
   },
 

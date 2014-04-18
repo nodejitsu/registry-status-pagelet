@@ -284,10 +284,12 @@ Charts.prototype.select = function select(id) {
  * @api public
  */
 Charts.prototype.add = function add(base, name, data, options) {
-  var container = base.append('g').attr('class', name)
-    , width = this.options.width - this.options.margin.left - this.options.margin.right
-    , height = this.options.height / 5
-    , vertical = (base.selectAll('.registry').length - 1) * height + this.options.margin.top
+  var container = base.append('g').attr('class', 'type ' + name)
+    , elements = base.selectAll('.type')[0]
+    , margin = this.options.margin
+    , width = this.options.width - margin.left - margin.right
+    , height = this.options.height / 4
+    , vertical = (elements.length - 1) * (height + margin.top + margin.bottom)
     , translate = [ this.options.margin.left, vertical ].join();
 
   //
@@ -388,13 +390,13 @@ Chart.prototype.statistics = function statistics() {
   //
   // Add a title and unit.
   //
-  this.text(this.stats, this.options.title, 'title', [100, 0]);
-  this.text(this.stats, this.options.unit, 'unit', [125, 40]);
+  this.text(this.stats, this.options.title, 'title', [120, 0]);
+  this.text(this.stats, this.options.unit, 'unit', [120, 60]);
 
   //
   // Display the most recent data left of the chart, text is aligned to the right.
   //
-  this.last = this.text(this.stats, 0, 'value', [100, 40]);
+  this.last = this.text(this.stats, 0, 'value', [120, 40]);
   this.current(this.last, this.data[this.data.length - 1], this.options.animation);
 };
 
@@ -406,9 +408,9 @@ Chart.prototype.statistics = function statistics() {
 Chart.prototype.visuals = function visuals() {
   var visual = this.options.visual in this ? this.options.visual : 'line'
     , options = {
-      width: this.options.width * this.options.ratio,
-      height: this.options.height
-    };
+        width: this.options.width * this.options.ratio,
+        height: this.options.height
+      };
 
   //
   // Transform the chart to the right so there is room for the statistics.
@@ -430,6 +432,16 @@ Chart.prototype.visuals = function visuals() {
   //
   this.x = this.time(this.chart, options);
   this.y = this.units(this.chart, options);
+
+  //
+  // Add grid lines if required and add the actual data serie.
+  //
+  if (this.options.grid.horizontal) this.grid(this.chart, options);
+  if (this.options.grid.vertical) this.grid(this.chart, options, true);
+
+  //
+  // Add horizontal grid lines.
+  //
   this.serie = this[visual](this.chart);
 };
 
@@ -498,9 +510,49 @@ Chart.prototype.time = function time(base, options) {
   //
   return {
     scale: scale.domain([this.now - this.n * this.step, this.now]),
-    axis: axis.scale(scale).ticks(4),
+    axis: axis.scale(scale).ticks(this.options.ticks.x),
     container: container.call(axis)
   };
+};
+
+/**
+ * Add grid lines to the chart.
+ *
+ * @param {Element} base Chart SVG group
+ * @param {Object} options
+ * @param {Boolean} vertical Type of grid lines.
+ * @api private
+ */
+Chart.prototype.grid = function grid(base, options, vertical) {
+  var chart = this
+    , axis = vertical ? 'x' : 'y';
+
+  /**
+   * Helper function to find the reference point in pixels on the axis.
+   *
+   * @param {Number} d Data point
+   * @return {Number} location in pixels
+   */
+  function line(d) {
+    return chart[axis].scale(d);
+  }
+
+  //
+  // Add the lines.
+  //
+  console.log(axis);
+  base
+    .selectAll('.grid.' + axis)
+    .data(chart[axis].scale.ticks(chart.options.ticks[axis]))
+    .enter()
+    .append('line')
+    .attr({
+      class: 'grid ' + axis,
+      x1: vertical ? line : 0,
+      x2: vertical ? line : options.width,
+      y1: vertical ? 0 : line,
+      y2: vertical ? options.height: line
+    });
 };
 
 /**
@@ -523,7 +575,7 @@ Chart.prototype.units = function units(base, options) {
 
   return {
     scale: scale.domain([0, d3.max(this.data)]).nice(),
-    axis: axis.scale(scale).ticks(5),
+    axis: axis.scale(scale).ticks(this.options.ticks.y),
     container: container.call(axis)
   };
 };
