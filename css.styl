@@ -2,9 +2,44 @@ $base = #444
 $blue = #2980b9
 $highlight = #f4f4f4
 
+.map
 .charts
   border-left: 5px solid $highlight
 
+.registries
+  width: 17.25% !important // Add margin right to registries
+
+  ul
+    padding-left: 0
+    margin-top: 10px
+
+  li
+    text-transform: uppercase
+    font-weight: bold
+    list-style: none
+    height: 32px
+    line-height: @height
+    padding: 0 .5em
+    cursor: pointer
+
+    &:hover
+      background-color: $base
+
+      a
+        color: white
+
+    &:target:not(:hover)
+      background-color: $highlight
+
+  a
+    display: block
+    color: $base
+
+    &:hover
+      text-decoration: none
+
+
+.charts
   .axis
     line
     path
@@ -50,7 +85,9 @@ $highlight = #f4f4f4
     fill: $base
     stroke: $highlight
     stroke-width: 2
-    cursor: pointer
+
+    &.highlight
+      fill: #ffb800
 
 .line
   fill: transparent
@@ -70,13 +107,3 @@ $highlight = #f4f4f4
   text-transform: uppercase
   z-index: 1
   padding: 3px 0
-
-  ul
-    margin: 0
-    padding-left: 24px
-
-  li
-    cursor: pointer
-    font-size: 14px
-    font-weight: bold
-    padding: 2px 5px 2px 0

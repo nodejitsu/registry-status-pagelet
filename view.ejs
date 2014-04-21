@@ -1,0 +1,16 @@
+<div class="row">
+  <h1>Registry status</h1>
+  <div class="tooltip"></div>
+
+  <section class="twocol registries last">
+    <ul>
+      <% registries.forEach(function (location) { %>
+        <% Object.keys(location.names).forEach(function (registry) { %>
+          <li id="<%- registry %>"><a href="#<%- registry %>"><%- location.names[registry] %></a></li>
+        <% }) %>
+      <% }) %>
+    </ul>
+  </section>
+
+  <section class="tencol svg last"></section>
+</div>

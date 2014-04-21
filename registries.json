@@ -1,9 +1,17 @@
 [
   {
+    "id": "sf",
+    "lonlat": [-122.3984, 37.7989],
+    "names": {
+      "npmjs": "npmjs.org",
+      "fullfat": "Fullfat mirror"
+    }
+  },
+  {
     "id": "atlanta",
     "lonlat": [-84.3915, 33.7516],
     "names": {
-      "nodejitsu": "Nodejitsu.com mirror"
+      "nodejitsu": "Nodejitsu.com"
     }
   },
   {
@@ -11,7 +19,7 @@
     "lonlat": [-96.8353, 32.9299],
     "names": {
       "iriscouch": "Iriscouch mirror",
-      "strongloop": "Strongloop.com mirror"
+      "strongloop": "Strongloop.com"
     }
   },
   {
@@ -26,14 +34,6 @@
     "lonlat": [11.07787, 49.45476],
     "names": {
       "npmjseu": "European mirror"
-    }
-  },
-  {
-    "id": "sf",
-    "lonlat": [-122.3984, 37.7989],
-    "names": {
-      "npmjs": "Main npm registry",
-      "fullfat": "Fullfat mirror"
     }
   },
   {

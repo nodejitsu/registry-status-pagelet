@@ -18,7 +18,7 @@ var marker = [
 // Extendt he pagelet with custom data.
 //
 Pagelet.extend({
-  view: 'view.html',      // The template that gets rendered.
+  view: 'view.ejs',       // The template that gets rendered.
   css: 'css.styl',        // All CSS required to render this component.
   js: 'client.js',        // Progressive enhancements for the UI.
 
@@ -56,9 +56,9 @@ Pagelet.extend({
     marker: marker,     // SVG path for map marker
     animation: 1000,    // Amount of milliseconds an animation should take
     height: 300,        // Height of the widget in pixels
-    width: 1140,        // Width of the widget in pixels === grid.row
-    scale: 112,         // Relative scale of the map
-    ratio: 0.618,       // Relative width the map can use
+    width: 942,         // Width of the widget in pixels === grid.row.tencol
+    scale: 88,          // Relative scale of the map
+    ratio: 0.58,        // Relative width the map can use
 
     //
     // Margin of the chart section according to d3 margin conventions

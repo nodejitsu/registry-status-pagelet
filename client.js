@@ -91,7 +91,6 @@ function Registries(data, dispatch, map) {
   this.data = data;
 
   this.locations = map.container.append('g').attr('class', 'registries');
-  this.tooltip = d3.select('.tooltip');
 }
 
 /**
@@ -107,10 +106,11 @@ Registries.prototype.add = function add(data, marker) {
     .data(data)
     .enter()
     .append('path')
-    .attr('id', this.id)
+    .attr('class', this.id)
     .attr('d', marker)
-    .attr('transform', this.translate.bind(this))
-    .on('click', this.select(this));
+    .attr('transform', this.translate.bind(this));
+
+  return this;
 };
 
 /**
@@ -121,8 +121,13 @@ Registries.prototype.add = function add(data, marker) {
  * @api public
  */
 Registries.prototype.id = function id(datum) {
-  return Object.keys(datum.names).join();
+  return Object.keys(datum.names).join(' ');
 };
+
+Registries.prototype.highlight = function highlight(className) {
+  this.locations.selectAll('path').classed('highlight', false);
+  this.locations.selectAll('path.'+ className).classed('highlight', true)
+}
 
 /**
  * Translate the marker to calculated map position.
@@ -136,66 +141,6 @@ Registries.prototype.translate = function translate(registry) {
   xy[1] = xy[1] - 26; // TODO: use actual height/width of marker
 
   return 'translate('+ xy.join() +')';
-};
-
-/**
- * Register event listener for registry selection. This will dispatch an event
- * that will be listened to from the charts collection.
- *
- * @param {Object} registry Reference to self
- * @return {Function} listener.
- * @api public
- */
-Registries.prototype.select = function select(registry) {
-  var duration = this.options.animation / 2
-    , registries = this
-    , position
-    , names;
-
-  //
-  // Create event listener.
-  //
-  return function emit(mirror) {
-    //
-    // Hide the tooltip to start fresh.
-    //
-    registries.tooltip.transition().duration(duration / 2).style({
-      opacity: 0,
-      display: 'none'
-    });
-
-    //
-    // Get the names from the mirror or the provided element.
-    //
-    names = mirror ? Object.keys(mirror.names) : [this.id];
-    if (names.length === 1) return registry.dispatch.select(names[0]);
-
-    //
-    // Set the location of the div to the mouse location relative to the SVG.
-    //
-    position = d3.mouse(registries.map.container[0][0]);
-    names = names.reduce(function reduce(html, id) {
-      return html + '<li id="'+ id +'">'+ mirror.names[id] +'</li>';
-    }, '<ul>') + '</ul>';
-
-    //
-    // Replace innerHTML of the tooltip with all registry names.
-    //
-    registries.tooltip.html(names).style({
-      left: position[0] + 'px',
-      top: position[1] + 40 + 'px'
-    });
-
-    //
-    // Fade in and add/replace listeners on the tooltips.
-    //
-    registries.tooltip.selectAll('ul li').on('click', emit);
-    registries.tooltip.transition().duration(duration).style({
-      left: position[0] + 15 + 'px',
-      opacity: 1,
-      display: 'block'
-    });
-  };
 };
 
 /**
@@ -262,8 +207,6 @@ Charts.prototype.initialize = function initialize(base, transform) {
 
 /**
  * Handle selection of npm registry. Hide charts and data but the selected registry.
- *
- * TODO: let the user choose the registry via popup that will provide the correct id.
  *
  * @param {String} id Registry ID matching the className of the chart group.
  * @api public
@@ -654,12 +597,52 @@ Chart.prototype.animate = function animate(duration) {
   );
 };
 
+/**
+ * Register event listener for registry selection. This will dispatch an event
+ * that will be listened to from the charts collection.
+ *
+ * @param {Object} registry Reference to self
+ * @return {Function} listener.
+ * @api public
+ */
+Chart.prototype.tooltip = function tooltip(content) {
+  var duration = this.options.animation / 2
+    , registries = this
+    , position
+    , names;
+
+  //
+  // Hide the tooltip to start fresh.
+  //
+  registries.tooltip.transition().duration(duration / 2).style({
+    opacity: 0,
+    display: 'none'
+  });
+
+  //
+  // Replace innerHTML of the tooltip with all registry names.
+  //
+  registries.tooltip.html(content).style({
+    left: position[0] + 'px',
+    top: position[1] + 40 + 'px'
+  });
+
+  //
+  // Fade in and add/replace listeners on the tooltips.
+  //
+  registries.tooltip.transition().duration(duration).style({
+    left: position[0] + 15 + 'px',
+    opacity: 1,
+    display: 'block'
+  });
+};
+
 //
 // Initialize the map from the data and options.
 //
 pipe.once('status::initialise', function (pipe, pagelet) {
   var dispatch = d3.dispatch('select')
-    , holder = d3.select(pagelet.placeholders[0]).select('.row')
+    , holder = d3.select(pagelet.placeholders[0]).select('.row .svg')
     , map = new Map(pagelet.data, dispatch).initialize(holder, transform)
     , charts = new Charts(pagelet.data, dispatch).initialize(holder, transform)
     , registries = new Registries(pagelet.data, dispatch, map).add(
@@ -671,8 +654,8 @@ pipe.once('status::initialise', function (pipe, pagelet) {
   // If a specific location is selected update the charts, on receiving new
   // data append the latest metric to the charts.
   //
-  dispatch.on('select', charts.select.bind(charts));
   pipe.stream.on('data', charts.append.bind(charts));
+  d3.selectAll('.registries li').on('click', change);
 
   //
   // Show npmjs.org main registry by default, yes I know not
@@ -696,5 +679,18 @@ pipe.once('status::initialise', function (pipe, pagelet) {
       .attr('preserveAspectRatio', 'xMinYMin meet');
 
     return element;
+  }
+
+  /**
+   * Handle selection of registries.
+   *
+   * @param {String} id Unique identifier of the registry.
+   * @api private
+   */
+  function change(id) {
+    id = id || this.id;
+
+    registries.highlight(id);
+    charts.select(id || this.id);
   }
 });
