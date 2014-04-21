@@ -124,10 +124,16 @@ Registries.prototype.id = function id(datum) {
   return Object.keys(datum.names).join(' ');
 };
 
+/**
+ * Higlight the selected registry.
+ *
+ * @param {String} className
+ * @api public
+ */
 Registries.prototype.highlight = function highlight(className) {
   this.locations.selectAll('path').classed('highlight', false);
-  this.locations.selectAll('path.'+ className).classed('highlight', true)
-}
+  this.locations.selectAll('path.'+ className).classed('highlight', true);
+};
 
 /**
  * Translate the marker to calculated map position.
