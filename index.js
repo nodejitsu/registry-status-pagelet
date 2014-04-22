@@ -83,7 +83,7 @@ Pagelet.extend({
 
     delta: {
       grid: { horizontal: true, vertical: true },
-      ticks: { x: 7, y: 5 },
+      ticks: { x: 10, y: 5 },
       title: 'Replication lag',
       visual: 'heatmap',
       unit: 'hours',

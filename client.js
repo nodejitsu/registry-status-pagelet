@@ -282,7 +282,7 @@ Charts.prototype.name = function name(type, registry) {
  */
 Charts.prototype.append = function append(probe) {
   var name = this.name(probe.name, probe.registry);
-  this.stack[name].update(probe.results.mean);
+  this.stack[name].update(probe.results);
 };
 
 /**
@@ -296,6 +296,9 @@ Charts.prototype.append = function append(probe) {
  * @api public
  */
 function Chart(name, container, data, options) {
+  var chart = this
+    , i;
+
   this.container = container;
   this.options = options = options || {};
   this.data = [];
@@ -306,11 +309,17 @@ function Chart(name, container, data, options) {
   this.now = Date.now();                // Used for the domain of the x-axis.
   this.key = options.key || 'mean';     // Data key used for displaying data.
 
+
+  //
+  // Get the max value for the current domain.
+  //
+  this.max = function max(d) { return d.values[chart.key]; };
+
   //
   // Select the end of the data range equal to the number of steps.
   //
-  var i = this.n < data.length ? this.n : data.length;
-  while (--i) { this.data.push(data[data.length - i][this.key]); }
+  i = this.n < data.length ? this.n : data.length;
+  while (--i) { this.data.push(data[data.length - i]); }
 
   //
   // Construct all parts of the chart.
@@ -346,7 +355,11 @@ Chart.prototype.statistics = function statistics() {
   // Display the most recent data left of the chart, text is aligned to the right.
   //
   this.last = this.text(this.stats, 0, 'value', [120, 40]);
-  this.current(this.last, this.data[this.data.length - 1], this.options.animation);
+  this.current(
+    this.last,
+    this.data[this.data.length - 1].values[this.key],
+    this.options.animation
+  );
 };
 
 /**
@@ -453,10 +466,6 @@ Chart.prototype.time = function time(base, options) {
   //
   container.attr('transform', 'translate(0,'+ options.height +')');
 
-  //
-  // Set 6 hours (+15 minutes) as range for domain of the time axis.
-  // Add the scale to the axis and force a tick per hour.
-  //
   return {
     scale: scale.domain([this.now - this.n * this.step, this.now]),
     axis: axis.scale(scale).ticks(this.options.ticks.x),
@@ -522,7 +531,7 @@ Chart.prototype.units = function units(base, options) {
   container.attr('transform', 'translate('+ options.width +',0)');
 
   return {
-    scale: scale.domain([0, d3.max(this.data)]).nice(),
+    scale: scale.domain([0, d3.max(this.data, this.max)]).nice(),
     axis: axis.scale(scale).ticks(this.options.ticks.y),
     container: container.call(axis)
   };
@@ -541,12 +550,13 @@ Chart.prototype.line = function line(base) {
     , serie = d3.svg.line().interpolate('basis')
     , chart = this;
 
+  // TODO use the provided time value on the datum object
   serie.x(function serieX(d, i) {
     return chart.x.scale(chart.now - (chart.n - 1 - i) * chart.step);
   });
 
-  serie.y(function serieY(d, i) {
-    return chart.y.scale(d);
+  serie.y(function serieY(d) {
+    return chart.y.scale(d.values[chart.key]);
   });
 
   return {
@@ -554,6 +564,25 @@ Chart.prototype.line = function line(base) {
     container: visual
   };
 };
+
+/**
+ * Add heatmap to the chart.
+ *
+ * @param {Element} base Container for the line.
+ * @return {Object} reference to constructed parts of the axis.
+ * @api public
+ */
+/*Chart.prototype.heatmap = function heatmap(base) {
+  console.log(this.data);
+  var container = base.append('g').attr('clip-path', 'url(#'+ this.name +')')
+    , visual = container.append('path').data([ this.data ]).attr('class', 'line')
+    , chart = this;
+
+  return {
+    stack: {},
+    container: {}
+  };
+};*/
 
 /**
  * Update the chart data and trigger animations on the chart.
@@ -567,7 +596,7 @@ Chart.prototype.update = function update(data) {
   //
   // Update the axes and last shown metric.
   //
-  this.current(this.last, data, this.options.animation);
+  this.current(this.last, data.values[this.key], this.options.animation);
   this.animate(this.options.animation);
 
   //
@@ -591,7 +620,7 @@ Chart.prototype.animate = function animate(duration) {
   //
   this.x.scale.domain([now - this.n * this.step, now]);
   this.x.container.transition().duration(duration).ease('linear').call(this.x.axis);
-  this.y.scale.domain([0, d3.max(this.data)]).nice();
+  this.y.scale.domain([0, d3.max(this.data, this.max)]).nice();
 
   //
   // Draw the line and transition to the left.
@@ -647,7 +676,8 @@ Chart.prototype.tooltip = function tooltip(content) {
 // Initialize the map from the data and options.
 //
 pipe.once('status::initialise', function (pipe, pagelet) {
-  var dispatch = d3.dispatch('select')
+  var hash = window.location.hash
+    , dispatch = d3.dispatch('select')
     , holder = d3.select(pagelet.placeholders[0]).select('.row .svg')
     , map = new Map(pagelet.data, dispatch).initialize(holder, transform)
     , charts = new Charts(pagelet.data, dispatch).initialize(holder, transform)
@@ -667,7 +697,8 @@ pipe.once('status::initialise', function (pipe, pagelet) {
   // Show npmjs.org main registry by default, yes I know not
   // even the nodejitsu mirror first, weird huh ;)
   //
-  holder.select('.npmjs').classed('show', true);
+  if (!hash) hash = '#npmjs';
+  holder.select('.registry' + hash.replace('#', '.')).classed('show', true);
 
   /**
    * Transform an SVG element and set visual attributes.
