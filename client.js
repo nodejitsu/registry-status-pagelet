@@ -792,7 +792,7 @@ Chart.prototype.tooltip = function tooltip(content) {
 //
 // Initialize the map from the data and options.
 //
-pipe.once('status::initialise', function (pagelet) {
+pipe.once('status::initialise', function init(pagelet) {
   var hash = window.location.hash
     , dispatch = d3.dispatch('select')
     , holder = d3.select(pagelet.placeholders[0]).select('.row .svg')
@@ -807,7 +807,7 @@ pipe.once('status::initialise', function (pagelet) {
   // If a specific location is selected update the charts, on receiving new
   // data append the latest metric to the charts.
   //
-  pipe.stream.on('data', charts.append.bind(charts));
+  pagelet.pipe.stream.on('data', charts.append.bind(charts));
   d3.selectAll('.registries li').on('click', change);
 
   //

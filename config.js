@@ -54,5 +54,25 @@ module.exports = {
       type: 'ordinal',
       ticks: 4
     }
-  }
+  },
+
+  //
+  // Publish status chart specifications.
+  //
+  publish: {
+    title: 'Publish status',
+    visual: 'bar',
+    unit: '%',
+    key: 'percentage',
+    n: 10,
+    x: {
+      type: 'time',
+      format: '%d',
+      ticks: 9
+    },
+    y: {
+      type: 'linear',
+      ticks: 5
+    }
+  },
 };
