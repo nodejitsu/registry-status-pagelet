@@ -814,8 +814,7 @@ pipe.once('status::initialise', function init(pagelet) {
   // Show npmjs.org main registry by default, yes I know not
   // even the nodejitsu mirror first, weird huh ;)
   //
-  if (!hash) hash = '#npmjs';
-  change(hash.replace('#', ''));
+  change(!hash ? 'npmjs' : hash.slice(1));
 
   /**
    * Transform an SVG element and set visual attributes.
