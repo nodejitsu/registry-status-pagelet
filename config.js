@@ -19,9 +19,9 @@ module.exports = {
   // Ping chart specifications.
   //
   ping: {
-    grid: { horizontal: true },
     title: 'Response time',
     visual: 'line',
+    key: 'mean',
     unit: 'ms',
     n: 40,
     x: {
@@ -30,6 +30,7 @@ module.exports = {
       ticks: 4
     },
     y: {
+      grid: true,
       type: 'linear',
       ticks: 4
     }
@@ -42,6 +43,7 @@ module.exports = {
     title: 'Replication lag',
     visual: 'heatmap',
     unit: 'hours',
+    key: 'hours',
     n: 40,
     x: {
       type: 'time',

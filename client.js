@@ -372,7 +372,6 @@ Chart.prototype.visuals = function visuals() {
     , options = {
         width: this.options.width * this.options.ratio,
         height: this.options.height,
-        grid: this.options.grid || {},
         x: this.options.x || {},
         y: this.options.y || {}
       };
@@ -401,8 +400,8 @@ Chart.prototype.visuals = function visuals() {
   //
   // Add grid lines if required and add the actual data serie.
   //
-  if (options.grid.horizontal) this.grid(this.chart, options);
-  if (options.grid.vertical) this.grid(this.chart, options, true);
+  if (options.y.grid) this.grid(this.chart, options);
+  if (options.x.grid) this.grid(this.chart, options, true);
 
   //
   // Add horizontal grid lines.
@@ -508,7 +507,7 @@ Chart.prototype.grid = function grid(base, options, vertical) {
   //
   base
     .selectAll('.grid.' + axis)
-    .data(chart[axis].scale.ticks(chart.options[axis].ticks))
+    .data(chart[axis].scale.ticks(options[axis].ticks))
     .enter()
     .append('line')
     .attr({
