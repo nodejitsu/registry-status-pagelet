@@ -15,6 +15,17 @@ var marker = [
 ].join(' ');
 
 //
+// Define constants and cutoffs for intervals in milliseconds.
+//
+Pagelet.day = 864E5;
+Pagelet.intervals = {
+  none: 0,
+  hour: Pagelet.day / 24,
+  day: Pagelet.day,
+  weeks: 7 * Pagelet.day
+};
+
+//
 // Extendt he pagelet with custom data.
 //
 Pagelet.extend({
@@ -36,13 +47,18 @@ Pagelet.extend({
   //
   // Keys of the data that should be supplied to the client.
   //
-  query: [ 'world', 'options', 'registries', 'status' ],
+  query: [ 'world', 'options', 'registries', 'status', 'marker' ],
 
   //
   // Load all the world data from JSON. This can be shipped with the actual pagelet
   // as loading is asynchronous anyways.
   //
   world: require(path.join(__dirname, 'world.json')),
+
+  //
+  // Marker used by the map.
+  //
+  marker: marker,
 
   //
   // Registry data containing locations, IDs and human readable names.
@@ -52,44 +68,43 @@ Pagelet.extend({
   //
   // Collection of options that will be used to render the SVG pagelet.
   //
-  options: {
-    marker: marker,     // SVG path for map marker
-    animation: 1000,    // Amount of milliseconds an animation should take
-    height: 300,        // Height of the widget in pixels
-    width: 942,         // Width of the widget in pixels === grid.row.tencol
-    scale: 88,          // Relative scale of the map
-    ratio: 0.58,        // Relative width the map can use
+  options: require(path.join(__dirname, 'config.js')),
 
-    //
-    // Margin of the chart section according to d3 margin conventions
-    //
-    margin: {
-      top: 10,
-      right: 60,
-      bottom: 20,
-      left: 20
-    },
+  /**
+   * Create backwards domain based on end and interval repeated n times.
+   *
+   * @param {Number} end Last number in sequence
+   * @param {Number} n Number of steps.
+   * @param {Number} interval Size of each step.
+   * @param {Boolean} boundary Only return range boundaries.
+   * @returns {Array} Range
+   * @api private
+   */
+  range: function range(end, n, interval, boundary) {
+    if (boundary) return [end - n * interval, end];
 
-    //
-    // Ping chart specific options.
-    //
-    ping: {
-      grid: { horizontal: true },
-      ticks: { x: 4, y: 4 },
-      title: 'Response time',
-      visual: 'line',
-      unit: 'ms'
-    },
-
-    delta: {
-      grid: { horizontal: true, vertical: true },
-      ticks: { x: 10, y: 5 },
-      title: 'Replication lag',
-      visual: 'heatmap',
-      unit: 'hours',
-      step: 864E5,      // Step size of one day
-      n: 10
+    var result = [];
+    while (n--) {
+      result.unshift(end - n * interval);
     }
+
+    return result;
+  },
+
+  /**
+   * Set option value by path.
+   *
+   * @param {String} path Location on configuration object.
+   * @param {Mixed} value
+   * @api private
+   */
+  set: function set(path, value) {
+    path.split('.').reduce(function walk(current, next, i) {
+      if (i === path.match(/\./g).length) return current[next] = value;
+      return current[next];
+    }, this.options);
+
+    return this;
   },
 
   //
@@ -111,6 +126,20 @@ Pagelet.extend({
    * @api private
    */
   get: function get(next) {
+    var now = Date.now()
+      , end = new Date().setHours(23,59,59,999) + 1;
+
+    //
+    // Set domains for ping chart, time serie equals 2 hours with 3 minute steps.
+    //
+    this.set('ping.x.domain', this.range(now, this.options.ping.n, 18E4, true));
+
+    //
+    // Set domains for delta chart, time serie equals 10 days.
+    //
+    this.set('delta.x.domain', this.range(end, this.options.delta.n / 4, Pagelet.day, true));
+    this.set('delta.y.domain', Object.keys(Pagelet.intervals));
+
     next(null, this);
   },
 }).on(module);

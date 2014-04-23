@@ -371,7 +371,10 @@ Chart.prototype.visuals = function visuals() {
   var visual = this.options.visual in this ? this.options.visual : 'line'
     , options = {
         width: this.options.width * this.options.ratio,
-        height: this.options.height
+        height: this.options.height,
+        grid: this.options.grid || {},
+        x: this.options.x || {},
+        y: this.options.y || {}
       };
 
   //
@@ -398,13 +401,13 @@ Chart.prototype.visuals = function visuals() {
   //
   // Add grid lines if required and add the actual data serie.
   //
-  if (this.options.grid.horizontal) this.grid(this.chart, options);
-  if (this.options.grid.vertical) this.grid(this.chart, options, true);
+  if (options.grid.horizontal) this.grid(this.chart, options);
+  if (options.grid.vertical) this.grid(this.chart, options, true);
 
   //
   // Add horizontal grid lines.
   //
-  this.serie = this[visual](this.chart);
+  this.serie = this[visual](this.chart, options);
 };
 
 /**
@@ -457,18 +460,23 @@ Chart.prototype.current = function current(base, value, duration) {
  * @api public
  */
 Chart.prototype.time = function time(base, options) {
-  var scale = d3.time.scale().range([0, options.width])
-    , axis = d3.svg.axis().orient('bottom').tickFormat(d3.time.format('%-H:%M'))
-    , container = base.append('g').attr('class', 'x axis');
+  var axis = d3.svg.axis().orient('bottom')
+    , container = base.append('g').attr('class', 'x axis')
+    , scale = this.scale(options.x.type, 'x', [0, options.width], options);
 
   //
   // Translate the axis down with the height of the chart.
   //
   container.attr('transform', 'translate(0,'+ options.height +')');
 
+  //
+  // Add specified format to the axis.
+  //
+  if ('format' in options.x) axis.tickFormat(d3.time.format(options.x.format));
+
   return {
-    scale: scale.domain([this.now - this.n * this.step, this.now]),
-    axis: axis.scale(scale).ticks(this.options.ticks.x),
+    scale: scale,
+    axis: axis.scale(scale).ticks(options.x.ticks),
     container: container.call(axis)
   };
 };
@@ -500,7 +508,7 @@ Chart.prototype.grid = function grid(base, options, vertical) {
   //
   base
     .selectAll('.grid.' + axis)
-    .data(chart[axis].scale.ticks(chart.options.ticks[axis]))
+    .data(chart[axis].scale.ticks(chart.options[axis].ticks))
     .enter()
     .append('line')
     .attr({
@@ -521,9 +529,9 @@ Chart.prototype.grid = function grid(base, options, vertical) {
  * @api public
  */
 Chart.prototype.units = function units(base, options) {
-  var scale = d3.scale.linear().range([options.height, 0])
-    , axis = d3.svg.axis().orient('right')
-    , container = base.append('g').attr('class', 'y axis');
+  var axis = d3.svg.axis().orient('right')
+    , container = base.append('g').attr('class', 'y axis')
+    , scale = this.scale(options.y.type, 'y', [options.height, 0], options);
 
   //
   // Translate the axis to the right of the chart.
@@ -531,28 +539,84 @@ Chart.prototype.units = function units(base, options) {
   container.attr('transform', 'translate('+ options.width +',0)');
 
   return {
-    scale: scale.domain([0, d3.max(this.data, this.max)]).nice(),
-    axis: axis.scale(scale).ticks(this.options.ticks.y),
+    scale: scale,
+    axis: axis.scale(scale).ticks(this.options.y.ticks),
     container: container.call(axis)
   };
+};
+
+/**
+ * Helper method to create a scale with correct properties.
+ *
+ * @param {[type]} type    [description]
+ * @param {[type]} options [description]
+ * @return {[type]}         [description]
+ */
+Chart.prototype.scale = function scale(type, dimension, range, options) {
+  var domain = options[dimension].domain
+    , construct;
+
+  if (!domain) {
+    switch (dimension) {
+      case 'x': domain = [this.now - this.n * this.step, this.now]; break;
+      case 'y': domain = [0, d3.max(this.data, this.max)]; break;
+    }
+  }
+
+  switch (type) {
+    case 'ordinal':
+      construct = d3.scale.ordinal().rangeRoundBands(range);
+    break;
+
+    case 'time':
+      construct = d3.time.scale().range(range);
+    break;
+
+    default:
+      construct = d3.scale.linear().range(range);
+    break;
+  }
+
+  return construct.domain(domain);
+};
+
+/**
+ * Create backwards domain based on end and interval repeated n times.
+ *
+ * @param {Number} end Last number in sequence
+ * @param {Number} n Number of steps.
+ * @param {Number} interval Size of each step.
+ * @param {Boolean} boundary Only return range boundaries.
+ * @returns {Array} Range
+ * @api private
+ */
+Chart.prototype.range = function range(end, n, interval, boundary) {
+  if (boundary) return [end - n * interval, end];
+
+  var result = [];
+  while (n--) {
+    result.unshift(end - n * interval);
+  }
+
+  return result;
 };
 
 /**
  * Add line with basic interpolation to the chart.
  *
  * @param {Element} base Container for the line.
+ * @param {Object} options
  * @return {Object} reference to constructed parts of the axis.
  * @api public
  */
-Chart.prototype.line = function line(base) {
+Chart.prototype.line = function line(base, options) {
   var container = base.append('g').attr('clip-path', 'url(#'+ this.name +')')
     , visual = container.append('path').data([ this.data ]).attr('class', 'line')
     , serie = d3.svg.line().interpolate('basis')
     , chart = this;
 
-  // TODO use the provided time value on the datum object
   serie.x(function serieX(d, i) {
-    return chart.x.scale(chart.now - (chart.n - 1 - i) * chart.step);
+    return chart.x.scale(d.t);
   });
 
   serie.y(function serieY(d) {
@@ -561,7 +625,40 @@ Chart.prototype.line = function line(base) {
 
   return {
     stack: serie,
-    container: visual
+    container: visual,
+    animate: function animate(duration) {
+      var domain = chart.range(Date.now(), chart.n, chart.step, true);
+
+      //
+      // Animate the time axis.
+      //
+      chart.x.scale.domain(domain);
+      chart.x.container
+        .transition()
+        .duration(duration)
+        .ease('linear')
+        .call(chart.x.axis);
+
+      //
+      // Update the unit axis.
+      //
+      chart.y.scale.domain([0, d3.max(chart.data, chart.max)]);
+      chart.y.container
+        .transition()
+        .duration(duration)
+        .ease('linear')
+        .call(chart.y.axis);
+
+      //
+      // Draw the line and transition to the left.
+      //
+      chart.serie.container.attr('d', chart.serie.stack).attr('transform', null);
+      chart.serie.container
+        .transition()
+        .duration(duration)
+        .ease('linear')
+        .attr('transform', 'translate(' + chart.x.scale(domain[0]) +',0)');
+    }
   };
 };
 
@@ -569,20 +666,39 @@ Chart.prototype.line = function line(base) {
  * Add heatmap to the chart.
  *
  * @param {Element} base Container for the line.
+ * @param {Object} options
  * @return {Object} reference to constructed parts of the axis.
  * @api public
  */
-/*Chart.prototype.heatmap = function heatmap(base) {
-  console.log(this.data);
+Chart.prototype.heatmap = function heatmap(base, options) {
   var container = base.append('g').attr('clip-path', 'url(#'+ this.name +')')
-    , visual = container.append('path').data([ this.data ]).attr('class', 'line')
+    , width = options.width / this.options.x.ticks
+    , height = (options.height - 4) / this.options.y.ticks
     , chart = this;
 
+  //
+  // Add rectangle per data point.
+  //
+  var serie = container
+    .selectAll('.unit')
+    .data(this.data)
+    .enter()
+    .append('rect')
+    .attr('x', function(d) { return chart.x.scale(d.t); })
+    .attr('y', function(d, i) { return chart.y.scale(d.values.type) - 1; })
+    .attr('rx', 2)
+    .attr('ry', 2)
+    .attr('width', width)
+    .attr('height', height)
+    .attr('class', function (d) {
+      return 'heatmap hecta-' + Math.round(d.values.n / 10);
+    });
+
   return {
-    stack: {},
-    container: {}
+    stack: serie,
+    container: container
   };
-};*/
+};
 
 /**
  * Update the chart data and trigger animations on the chart.
@@ -608,28 +724,10 @@ Chart.prototype.update = function update(data) {
 /**
  * Animate the whole chart for the provided duration.
  *
- * @param {Number} duration Animation duration.
  * @api private
  */
 Chart.prototype.animate = function animate(duration) {
-  var now = Date.now()
-    , chart = this;
-
-  //
-  // Animate the time axis and update the domain of the y axis
-  //
-  this.x.scale.domain([now - this.n * this.step, now]);
-  this.x.container.transition().duration(duration).ease('linear').call(this.x.axis);
-  this.y.scale.domain([0, d3.max(this.data, this.max)]).nice();
-
-  //
-  // Draw the line and transition to the left.
-  //
-  this.serie.container.attr('d', this.serie.stack).attr('transform', null);
-  this.serie.container.transition().duration(duration).ease('linear').attr(
-    'transform',
-    'translate(' + this.x.scale(now - this.n * this.step) +')'
-  );
+  if ('animate' in this.serie) this.serie.animate(duration);
 };
 
 /**
@@ -683,7 +781,7 @@ pipe.once('status::initialise', function (pipe, pagelet) {
     , charts = new Charts(pagelet.data, dispatch).initialize(holder, transform)
     , registries = new Registries(pagelet.data, dispatch, map).add(
         pagelet.data.registries,
-        pagelet.data.options.marker
+        pagelet.data.marker
       );
 
   //
@@ -698,7 +796,7 @@ pipe.once('status::initialise', function (pipe, pagelet) {
   // even the nodejitsu mirror first, weird huh ;)
   //
   if (!hash) hash = '#npmjs';
-  holder.select('.registry' + hash.replace('#', '.')).classed('show', true);
+  change(hash.replace('#', ''));
 
   /**
    * Transform an SVG element and set visual attributes.

@@ -76,9 +76,13 @@ $highlight = #f4f4f4
 .countries
   fill: $blue
 
-  for i in 1..10
-    .hecta-{i}
-      fill: lighten(@fill, i * 5%)
+.heatmap
+  stroke: $highlight
+  stroke-width: 2
+
+  for i in 0..10
+    &.hecta-{i}
+      fill: lighten($blue, (10 - i) * 10%)
 
 .registries
   path
