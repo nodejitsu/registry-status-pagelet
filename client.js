@@ -792,7 +792,7 @@ Chart.prototype.tooltip = function tooltip(content) {
 //
 // Initialize the map from the data and options.
 //
-pipe.once('status::initialise', function (pipe, pagelet) {
+pipe.once('status::initialise', function (pagelet) {
   var hash = window.location.hash
     , dispatch = d3.dispatch('select')
     , holder = d3.select(pagelet.placeholders[0]).select('.row .svg')
