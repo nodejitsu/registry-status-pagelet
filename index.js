@@ -20,9 +20,9 @@ var marker = [
 Pagelet.day = 864E5;
 Pagelet.intervals = {
   none: 0,
-  hour: Pagelet.day / 24,
   day: Pagelet.day,
-  weeks: 7 * Pagelet.day
+  week: 7 * Pagelet.day,
+  month: 30 * Pagelet.day
 };
 
 //

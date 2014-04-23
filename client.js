@@ -218,8 +218,28 @@ Charts.prototype.initialize = function initialize(base, transform) {
  * @api public
  */
 Charts.prototype.select = function select(id) {
-  this.container.selectAll('.registry').classed('show', false);
-  this.container.select('.' + id).classed('show', true);
+  var duration = this.options.animation / 4;
+
+  //
+  // Hide current registry charts.
+  //
+  this.container.selectAll('.registry.show')
+    .transition()
+    .duration(duration)
+    .attr('transform', 'translate('+ this.options.width +',0)')
+    .each('end', function (element) {
+      d3.select(this).classed('show', false);
+    });
+
+  //
+  // Show the new graphs by moving in from the left
+  //
+  this.container.select('.' + id)
+    .classed('show', true)
+    .attr('transform', 'translate('+ -this.options.width +',0)')
+    .transition()
+    .duration(duration)
+    .attr('transform', 'translate(0,0)');
 };
 
 /**
