@@ -326,9 +326,12 @@ function Chart(name, container, data, options) {
 
   this.step = options.step || 18E4;     // Step size in milliseconds, 3 minutes.
   this.n = options.n || 40;             // Steps, e.g. 2 hours.
-  this.now = Date.now();                // Used for the domain of the x-axis.
   this.key = options.key || 'mean';     // Data key used for displaying data.
 
+  //
+  // Reference to the tooltip, when the tooltip itself is clicked hide it.
+  //
+  this.tip = d3.select('.tooltip').on('click', this.tooltip.bind(this, '',  true));
 
   //
   // Get the max value for the current domain.
@@ -577,7 +580,7 @@ Chart.prototype.scale = function scale(type, dimension, range, options) {
 
   if (!domain) {
     switch (dimension) {
-      case 'x': domain = [this.now - this.n * this.step, this.now]; break;
+      case 'x': domain = this.range(Date.now(), this.n, this.step, true); break;
       case 'y': domain = [0, d3.max(this.data, this.max)]; break;
     }
   }
@@ -711,6 +714,16 @@ Chart.prototype.heatmap = function heatmap(base, options) {
     .attr('height', height)
     .attr('class', function (d) {
       return 'heatmap hecta-' + Math.round(d.values.n / 10);
+    })
+    .on('click', function click(d) {
+      var length = d.values.modules.length;
+      if (!length) return;
+
+      chart.tooltip([
+        '<strong>Unsynchronised modules: </strong>',
+        d.values.modules.slice(0, 10).join(', '),
+        length > 10 ? ' and more...' : '.'
+      ].join(''));
     });
 
   return {
@@ -757,36 +770,39 @@ Chart.prototype.animate = function animate(duration) {
  * @return {Function} listener.
  * @api public
  */
-Chart.prototype.tooltip = function tooltip(content) {
+Chart.prototype.tooltip = function tooltip(content, hide) {
   var duration = this.options.animation / 2
-    , registries = this
-    , position
+    , position = d3.mouse(d3.select('.svg')[0][0])
     , names;
+
+  //
+  // Determine if the tooltip is currently visible.
+  //
+  hide = hide || this.tip[0][0].offsetParent;
 
   //
   // Hide the tooltip to start fresh.
   //
-  registries.tooltip.transition().duration(duration / 2).style({
+  this.tip.transition().duration(duration / 2).style({
     opacity: 0,
     display: 'none'
   });
 
+  if (hide) return;
+
   //
   // Replace innerHTML of the tooltip with all registry names.
   //
-  registries.tooltip.html(content).style({
-    left: position[0] + 'px',
-    top: position[1] + 40 + 'px'
+  this.tip.html(content).style({
+    left: position[0] + 60 + 'px',
+    top: position[1] + 80 + 'px',
+    display: 'block'
   });
 
   //
-  // Fade in and add/replace listeners on the tooltips.
+  // Fade in and add/replace listeners on the tooltip.
   //
-  registries.tooltip.transition().duration(duration).style({
-    left: position[0] + 15 + 'px',
-    opacity: 1,
-    display: 'block'
-  });
+  this.tip.transition().duration(duration).style('opacity', 1);
 };
 
 //
