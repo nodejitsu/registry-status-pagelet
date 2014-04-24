@@ -64,10 +64,11 @@ module.exports = {
     visual: 'bar',
     unit: '%',
     key: 'percentage',
-    n: 10,
+    n: 20,
     x: {
       type: 'time',
       format: '%d',
+      grid: true,
       ticks: 9
     },
     y: {

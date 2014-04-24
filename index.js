@@ -76,12 +76,12 @@ Pagelet.extend({
    * @param {Number} end Last number in sequence
    * @param {Number} n Number of steps.
    * @param {Number} interval Size of each step.
-   * @param {Boolean} boundary Only return range boundaries.
+   * @param {Boolean} full Return complete range in stead of boundaries only.
    * @returns {Array} Range
    * @api private
    */
-  range: function range(end, n, interval, boundary) {
-    if (boundary) return [end - n * interval, end];
+  range: function range(end, n, interval, full) {
+    if (!full) return [end - n * interval, end];
 
     var result = [];
     while (n--) {
@@ -130,15 +130,21 @@ Pagelet.extend({
       , end = new Date().setHours(23,59,59,999) + 1;
 
     //
-    // Set domains for ping chart, time serie equals 2 hours with 3 minute steps.
+    // Set domain for ping chart, time serie equals 2 hours with 3 minute steps.
     //
-    this.set('ping.x.domain', this.range(now, this.options.ping.n, 18E4, true));
+    this.set('ping.x.domain', this.range(now, this.options.ping.n, 18E4));
 
     //
     // Set domains for delta chart, time serie equals 10 days.
     //
-    this.set('delta.x.domain', this.range(end, this.options.delta.n / 4, Pagelet.day, true));
+    this.set('delta.x.domain', this.range(end, this.options.delta.n / 4, Pagelet.day));
     this.set('delta.y.domain', Object.keys(Pagelet.intervals));
+
+    //
+    // Set domains for the publish chart, time serie equals 10 days.
+    //
+    this.set('publish.x.domain', this.range(end, this.options.publish.n / 2, Pagelet.day));
+    this.set('publish.y.domain', [0, 100]);
 
     next(null, this);
   },

@@ -570,9 +570,12 @@ Chart.prototype.units = function units(base, options) {
 /**
  * Helper method to create a scale with correct properties.
  *
- * @param {[type]} type    [description]
- * @param {[type]} options [description]
- * @return {[type]}         [description]
+ * @param {String} type Scale to construct
+ * @param {String} dimension X or Y
+ * @param {Array} range Lower and upper limits of the scale
+ * @param {Object} options
+ * @return {Object} d3 scale
+ * @api private
  */
 Chart.prototype.scale = function scale(type, dimension, range, options) {
   var domain = options[dimension].domain
@@ -684,6 +687,34 @@ Chart.prototype.line = function line(base, options) {
   };
 };
 
+Chart.prototype.bar = function bar(base, options) {
+  var container = base.append('g').attr('clip-path', 'url(#'+ this.name +')')
+    , width = options.width / this.options.x.ticks
+    , height = (options.height - 4) / this.options.y.ticks
+    , chart = this;
+
+  //
+  // Add rectangle per data point.
+  //
+  var serie = container
+    .selectAll('.stack')
+    .data(this.data)
+    .enter()
+    .append('rect')
+    .attr('x', function (d) { return chart.x.scale(d.t); })
+    .attr('y', function (d) { return chart.y.scale(d.values[chart.key]); })
+    .attr('width', width)
+    .attr('height', function (d) { return options.height - chart.y.scale(d.values[chart.key]); })
+    .attr('class', function (d) {
+      return 'stack ' + d.values.type;
+    });
+
+  return {
+    stack: serie,
+    container: container
+  };
+};
+
 /**
  * Add heatmap to the chart.
  *
@@ -706,8 +737,8 @@ Chart.prototype.heatmap = function heatmap(base, options) {
     .data(this.data)
     .enter()
     .append('rect')
-    .attr('x', function(d) { return chart.x.scale(d.t); })
-    .attr('y', function(d, i) { return chart.y.scale(d.values.type) - 1; })
+    .attr('x', function (d) { return chart.x.scale(d.t); })
+    .attr('y', function (d) { return chart.y.scale(d.values.type) - 1; })
     .attr('rx', 2)
     .attr('ry', 2)
     .attr('width', width)
