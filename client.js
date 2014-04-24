@@ -687,24 +687,41 @@ Chart.prototype.line = function line(base, options) {
   };
 };
 
+/**
+ * Generate stacked bars, values.lower will be used to calculate the start of
+ * the next stacked bar.
+ *
+ * @param {Element} base Container for the line.
+ * @param {Object} options
+ * @return {Object} reference to constructed parts of the axis.
+ */
 Chart.prototype.bar = function bar(base, options) {
   var container = base.append('g').attr('clip-path', 'url(#'+ this.name +')')
     , width = options.width / this.options.x.ticks
-    , height = (options.height - 4) / this.options.y.ticks
     , chart = this;
 
+  function height(point) {
+    return options.height - chart.y.scale(point);
+  }
+
   //
-  // Add rectangle per data point.
+  // Add all the bars to the chart.
   //
   var serie = container
     .selectAll('.stack')
     .data(this.data)
     .enter()
     .append('rect')
-    .attr('x', function (d) { return chart.x.scale(d.t); })
-    .attr('y', function (d) { return chart.y.scale(d.values[chart.key]); })
     .attr('width', width)
-    .attr('height', function (d) { return options.height - chart.y.scale(d.values[chart.key]); })
+    .attr('x', function (d) {
+      return chart.x.scale(d.t);
+    })
+    .attr('y', function (d) {
+      return chart.y.scale(d.values[chart.key]) - height(d.values.lower);
+    })
+    .attr('height', function (d) {
+      return height(d.values[chart.key]);
+    })
     .attr('class', function (d) {
       return 'stack ' + d.values.type;
     });
