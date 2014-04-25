@@ -38,7 +38,7 @@ Pagelet.extend({
   //
   // Keys of the data that should be supplied to the client.
   //
-  query: [ 'world', 'options', 'registries', 'status', 'marker' ],
+  query: [ 'world', 'options', 'registries', 'status', 'marker', 'latest' ],
 
   //
   // Load all the world data from JSON. This can be shipped with the actual pagelet
@@ -107,6 +107,13 @@ Pagelet.extend({
   //
   status: {
     ping: {}
+  },
+
+  //
+  // Most recent measurement/content to be displayed for each data type.
+  //
+  latest: {
+
   },
 
   /**

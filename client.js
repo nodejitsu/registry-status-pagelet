@@ -774,7 +774,7 @@ Chart.prototype.heatmap = function heatmap(base, options) {
       chart.tooltip([
         '<strong>Unsynchronised modules: </strong>',
         d.values.modules.slice(0, 10).join(', '),
-        length > 10 ? ' and more...' : '.'
+        length > 10 ? ' <strong>and ' + (length - 10) + ' more...</strong>' : '.'
       ].join(''));
     });
 
