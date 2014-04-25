@@ -226,7 +226,7 @@ Charts.prototype.select = function select(id) {
   this.container.selectAll('.registry.show')
     .transition()
     .duration(duration)
-    .attr('transform', 'translate('+ this.options.width +',0)')
+    .attr('transform', 'translate('+ this.options.width +','+ this.options.margin.top +')')
     .each('end', function (element) {
       d3.select(this).classed('show', false);
     });
@@ -236,10 +236,10 @@ Charts.prototype.select = function select(id) {
   //
   this.container.select('.' + id)
     .classed('show', true)
-    .attr('transform', 'translate('+ -this.options.width +',0)')
+    .attr('transform', 'translate('+ -this.options.width +','+ this.options.margin.top +')')
     .transition()
     .duration(duration)
-    .attr('transform', 'translate(0,0)');
+    .attr('transform', 'translate(0,'+ this.options.margin.top +')');
 };
 
 /**
