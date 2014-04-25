@@ -1,20 +1,9 @@
 'use strict';
 
 //
-// Define constants and cutoffs for intervals in milliseconds.
-//
-exports.day = 864E5;
-exports.intervals = {
-  none: 0,
-  hour: exports.day / 24,
-  day: exports.day,
-  "week⁺": 7 * exports.day
-};
-
-//
 // Define chart options.
 //
-exports.options = {
+module.exports = {
   animation: 1000,    // Amount of milliseconds an animation should take
   height: 300,        // Height of the widget in pixels
   width: 942,         // Width of the widget in pixels === grid.row.tencol
@@ -61,7 +50,7 @@ exports.options = {
     visual: 'heatmap',
     unit: 'days',
     key: 'days',
-    step: exports.day,
+    step: 864E5,
     n: 40,
     x: {
       type: 'time',
@@ -82,7 +71,7 @@ exports.options = {
     visual: 'bar',
     unit: '%',
     key: 'percentage',
-    step: exports.day,
+    step: 864E5,
     n: 20,
     x: {
       type: 'time',

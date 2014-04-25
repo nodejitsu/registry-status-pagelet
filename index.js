@@ -3,8 +3,8 @@
 var path = require('path')
   , Pagelet = require('pagelet')
   , Contour = require('contour')
-  , config = require('./config')
-  , options = config.options;
+  , options = require('./options')
+  , Collector = require('npm-probe');
 
 //
 // SVG representation of the map marker.
@@ -19,7 +19,6 @@ var marker = [
 //
 // Extend the pagelet with custom data.
 //
-Pagelet.config = config;
 Pagelet.extend({
   view: 'view.ejs',       // The template that gets rendered.
   css: 'css.styl',        // All CSS required to render this component.
@@ -119,6 +118,7 @@ Pagelet.extend({
    */
   get: function get(next) {
     var now = Date.now()
+      , options = this.options
       , end = new Date().setHours(23,59,59,999) + 1;
 
     //
@@ -130,7 +130,7 @@ Pagelet.extend({
     // Set domains for delta chart, time serie equals 10 days.
     //
     this.set('delta.x.domain', this.range(end, options.delta.n / 4, options.delta.step));
-    this.set('delta.y.domain', Object.keys(config.intervals));
+    this.set('delta.y.domain', Object.keys(Collector.probes.delta.intervals));
 
     //
     // Set domains for the publish chart, time serie equals 10 days.

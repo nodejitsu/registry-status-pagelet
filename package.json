@@ -27,6 +27,7 @@
   "dependencies": {
     "contour": "~0.2.1",
     "ejs": "~1.0.0",
-    "pagelet": "~0.2.4"
+    "pagelet": "~0.2.4",
+    "npm-probe": "~0.0.12"
   }
 }
