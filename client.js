@@ -324,8 +324,8 @@ function Chart(name, container, data, options) {
   this.data = [];
   this.name = name;
 
-  this.step = options.step || 18E4;     // Step size in milliseconds, 3 minutes.
-  this.n = options.n || 40;             // Steps, e.g. 2 hours.
+  this.step = options.step || 6E4;      // Step size in milliseconds, e.g. 1 minute.
+  this.n = options.n || 120;            // Steps, e.g. 2 hours.
   this.key = options.key || 'mean';     // Data key used for displaying data.
 
   //

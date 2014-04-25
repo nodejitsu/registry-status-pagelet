@@ -2,7 +2,9 @@
 
 var path = require('path')
   , Pagelet = require('pagelet')
-  , Contour = require('contour');
+  , Contour = require('contour')
+  , config = require('./config')
+  , options = config.options;
 
 //
 // SVG representation of the map marker.
@@ -15,19 +17,9 @@ var marker = [
 ].join(' ');
 
 //
-// Define constants and cutoffs for intervals in milliseconds.
+// Extend the pagelet with custom data.
 //
-Pagelet.day = 864E5;
-Pagelet.intervals = {
-  none: 0,
-  hour: Pagelet.day / 24,
-  day: Pagelet.day,
-  "week⁺": 7 * Pagelet.day
-};
-
-//
-// Extendt he pagelet with custom data.
-//
+Pagelet.config = config;
 Pagelet.extend({
   view: 'view.ejs',       // The template that gets rendered.
   css: 'css.styl',        // All CSS required to render this component.
@@ -53,7 +45,7 @@ Pagelet.extend({
   // Load all the world data from JSON. This can be shipped with the actual pagelet
   // as loading is asynchronous anyways.
   //
-  world: require(path.join(__dirname, 'world.json')),
+  world: require('./world'),
 
   //
   // Marker used by the map.
@@ -63,12 +55,12 @@ Pagelet.extend({
   //
   // Registry data containing locations, IDs and human readable names.
   //
-  registries: require(path.join(__dirname, 'registries.json')),
+  registries: require('./registries'),
 
   //
   // Collection of options that will be used to render the SVG pagelet.
   //
-  options: require(path.join(__dirname, 'config.js')),
+  options: options,
 
   /**
    * Create backwards domain based on end and interval repeated n times.
@@ -130,20 +122,20 @@ Pagelet.extend({
       , end = new Date().setHours(23,59,59,999) + 1;
 
     //
-    // Set domain for ping chart, time serie equals 2 hours with 3 minute steps.
+    // Set domain for ping chart, time serie equals 2 hours with minute steps.
     //
-    this.set('ping.x.domain', this.range(now, this.options.ping.n, 18E4));
+    this.set('ping.x.domain', this.range(now, options.ping.n, options.ping.step));
 
     //
     // Set domains for delta chart, time serie equals 10 days.
     //
-    this.set('delta.x.domain', this.range(end, this.options.delta.n / 4, Pagelet.day));
-    this.set('delta.y.domain', Object.keys(Pagelet.intervals));
+    this.set('delta.x.domain', this.range(end, options.delta.n / 4, options.delta.step));
+    this.set('delta.y.domain', Object.keys(config.intervals));
 
     //
     // Set domains for the publish chart, time serie equals 10 days.
     //
-    this.set('publish.x.domain', this.range(end, this.options.publish.n / 2, Pagelet.day));
+    this.set('publish.x.domain', this.range(end, options.publish.n / 2, options.publish.step));
     this.set('publish.y.domain', [0, 100]);
 
     next(null, this);
