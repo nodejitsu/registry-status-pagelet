@@ -257,8 +257,8 @@ Charts.prototype.add = function add(base, name, data, options) {
     , elements = base.selectAll('.type')[0]
     , margin = this.options.margin
     , width = this.options.width - margin.left - margin.right
-    , height = this.options.height / 4
-    , vertical = (elements.length - 1) * (height + margin.top + margin.bottom)
+    , height = Math.round(this.options.height / 5)
+    , vertical = (elements.length - 1) * (height + margin.bottom * 2)
     , translate = [ this.options.margin.left, vertical ].join();
 
   //
@@ -393,7 +393,7 @@ Chart.prototype.statistics = function statistics() {
 Chart.prototype.visuals = function visuals() {
   var visual = this.options.visual in this ? this.options.visual : 'line'
     , options = {
-        width: this.options.width * this.options.ratio,
+        width: Math.round(this.options.width * this.options.ratio),
         height: this.options.height,
         x: this.options.x || {},
         y: this.options.y || {}
@@ -411,8 +411,8 @@ Chart.prototype.visuals = function visuals() {
   // Define rectangular clipping area that will hide the path.
   //
   this.chart.append('defs').append('clipPath').attr('id', this.name).append('rect')
-    .attr('width', options.width)
-    .attr('height', options.height);
+    .attr('width', options.width - 1)
+    .attr('height', options.height - 1);
 
   //
   // Add the axes and data serie.
@@ -522,7 +522,7 @@ Chart.prototype.grid = function grid(base, options, vertical) {
    * @return {Number} location in pixels
    */
   function line(d) {
-    return chart[axis].scale(d);
+    return Math.round(chart[axis].scale(d));
   }
 
   //
@@ -697,7 +697,7 @@ Chart.prototype.line = function line(base, options) {
  */
 Chart.prototype.bar = function bar(base, options) {
   var container = base.append('g').attr('clip-path', 'url(#'+ this.name +')')
-    , width = options.width / this.options.x.ticks
+    , width = Math.round(options.width / this.options.x.ticks) - 1
     , chart = this;
 
   function height(point) {
@@ -714,13 +714,13 @@ Chart.prototype.bar = function bar(base, options) {
     .append('rect')
     .attr('width', width)
     .attr('x', function (d) {
-      return chart.x.scale(d.t);
+      return Math.round(chart.x.scale(d.t));
     })
     .attr('y', function (d) {
-      return chart.y.scale(d.values[chart.key]) - height(d.values.lower);
+      return Math.round(chart.y.scale(d.values[chart.key]) - height(d.values.lower));
     })
     .attr('height', function (d) {
-      return height(d.values[chart.key]);
+      return Math.round(height(d.values[chart.key]));
     })
     .attr('class', function (d) {
       return 'stack ' + d.values.type;
@@ -742,8 +742,8 @@ Chart.prototype.bar = function bar(base, options) {
  */
 Chart.prototype.heatmap = function heatmap(base, options) {
   var container = base.append('g').attr('clip-path', 'url(#'+ this.name +')')
-    , width = options.width / this.options.x.ticks
-    , height = (options.height - 4) / this.options.y.ticks
+    , width = Math.round(options.width / this.options.x.ticks)
+    , height = options.height / this.options.y.ticks
     , chart = this;
 
   //
@@ -754,14 +754,18 @@ Chart.prototype.heatmap = function heatmap(base, options) {
     .data(this.data)
     .enter()
     .append('rect')
-    .attr('x', function (d) { return chart.x.scale(d.t); })
-    .attr('y', function (d) { return chart.y.scale(d.values.type) - 1; })
     .attr('rx', 2)
     .attr('ry', 2)
     .attr('width', width)
     .attr('height', height)
     .attr('class', function (d) {
       return 'heatmap hecta-' + Math.round(d.values.n / 10);
+    })
+    .attr('x', function (d) {
+      return Math.round(chart.x.scale(d.t));
+    })
+    .attr('y', function (d) {
+      return Math.round(chart.y.scale(d.values.type));
     })
     .on('click', function click(d) {
       var length = d.values.modules.length;
