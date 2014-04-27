@@ -761,7 +761,7 @@
       },
       "properties": {
         "name": "Azerbaijan",
-        "continent": "Europe"
+        "continent": "Asia"
       },
       "id": "AZ"
     },
@@ -2160,7 +2160,7 @@
       },
       "properties": {
         "name": "Armenia",
-        "continent": "Europe"
+        "continent": "Asia"
       },
       "id": "AM"
     },
@@ -13901,7 +13901,7 @@
       },
       "properties": {
         "name": "Georgia",
-        "continent": "Europe"
+        "continent": "Asia"
       },
       "id": "GE"
     },
