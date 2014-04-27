@@ -10,7 +10,7 @@
  * @api public
  */
 function Map(data, dispatch) {
-  this.projection = d3.geo.equirectangular();
+  this.projection = d3.geo.mercator();
   this.path = d3.geo.path();
 
   this.dispatch = dispatch;
@@ -64,8 +64,8 @@ Map.prototype.draw = function draw() {
   // Update the position of the drawn map relative to the containing SVG element.
   //
   this.projection = this.projection.translate([
-    world[0][0].getBoundingClientRect().width / 2,
-    this.options.height / 1.8  // pretty arbitrary value, exact ratio unknown?
+    (world[0][0].getBoundingClientRect().width / 2) - 75,
+    this.options.height / 1.6  // pretty arbitrary value, exact ratio unknown?
   ]);
 
   //
@@ -121,7 +121,9 @@ Registries.prototype.add = function add(data, marker) {
  * @api public
  */
 Registries.prototype.id = function id(datum) {
-  return Object.keys(datum.names).join(' ');
+  return datum.registries.map(function (registry) {
+    return registry.name;
+  }).join(' ');
 };
 
 /**
