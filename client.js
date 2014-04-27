@@ -11,11 +11,43 @@
  */
 function Map(data, dispatch) {
   this.projection = d3.geo.mercator();
-  this.path = d3.geo.path();
+  this.path       = d3.geo.path();
 
   this.dispatch = dispatch;
-  this.options = data.options || {};
-  this.data = data;
+  this.options  = data.options || {};
+  this.data     = data;
+  this.colors   = this.options.colors || {
+    'north-america': '#a7cf37',
+    'south-america': '#bdce36',
+    'asia':          '#c77f33',
+    'europe':        '#c46833',
+    'africa':        '#ccb033',
+    'oceania':       '#bf3d33'
+    //
+    // Full complement from
+    // "npm color"
+    //
+    // @color1: #bf3d33;
+    // @color2: #c15233;
+    // @color3: #c46833;
+    // @color4: #c77f33;
+    // @color5: #c99733;
+    // @color6: #ccb033;
+    // @color7: #cdc834;
+    // @color8: #bdce36;
+    // @color9: #a7cf37;
+    // @color10: #91d039;
+    //
+    // Alternate 1 -- other color scheme
+    //
+    // 'north-america': '#688270',
+    // 'south-america': '#6c9378',
+    // 'asia':          '#aa7e7b',
+    // 'europe':        '#ad927c',
+    // 'africa':        '#afa67e',
+    // 'oceania':       '#a8b280'
+    //
+  }
 }
 
 /**
@@ -48,17 +80,37 @@ Map.prototype.initialize = function initialize(base, set) {
  * @api public
  */
 Map.prototype.draw = function draw() {
-  var world = this.container.append('g').attr('class', 'countries');
+  var world  = this.container.append('g').attr('class', 'countries'),
+      colors = this.colors;
 
   //
   // Draw the world.
   //
-  world
-    .selectAll('path')
+  world.selectAll('path')
     .data(this.data.world.features)
-    .enter()
+  .enter()
     .append('path')
-    .attr('d', this.path);
+      //
+      // Useful for debugging coloring...
+      //
+      // .attr('class', function (d) {
+      //   return [
+      //     d.properties.name
+      //       .toLowerCase()
+      //       .replace(/\s/g, '-'),
+      //     d.properties.continent
+      //       .toLowerCase()
+      //       .replace(' ', '-')
+      //   ].join(' ')
+      // })
+      .style('fill', function (d) {
+        var key = d.properties.continent
+          .toLowerCase()
+          .replace(' ', '-');
+
+        return d3.rgb(colors[key]);
+      })
+      .attr('d', this.path);
 
   //
   // Update the position of the drawn map relative to the containing SVG element.
