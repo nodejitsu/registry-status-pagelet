@@ -53,19 +53,6 @@
     ]
   },
   {
-    "id": "sydney",
-    "lonlat": [151.03911, -33.95567],
-    "registries": [
-      {
-        "name":    "npmjsau",
-        "display": "Australian mirror",
-        "url":     "registry.npmjs.au",
-        "type":    "community",
-        "icon":    "CM"
-      }
-    ]
-  },
-  {
     "id": "nuremberg",
     "lonlat": [11.07787, 49.45476],
     "registries": [
@@ -86,6 +73,19 @@
         "name":    "cnpmjs",
         "display": "Chinese mirror",
         "url":     "registry.cnpmjs.org",
+        "type":    "community",
+        "icon":    "CM"
+      }
+    ]
+  },
+  {
+    "id": "sydney",
+    "lonlat": [151.03911, -33.95567],
+    "registries": [
+      {
+        "name":    "npmjsau",
+        "display": "Australian mirror",
+        "url":     "registry.npmjs.au",
         "type":    "community",
         "icon":    "CM"
       }
