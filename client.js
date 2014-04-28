@@ -203,6 +203,7 @@ Charts.prototype.initialize = function initialize(base, transform) {
         groups[registry],
         this.name(type, registry),
         this.data.status[type][registry],
+        this.data.latest[type][registry],
         this.options[type]
       );
     }
@@ -249,10 +250,11 @@ Charts.prototype.select = function select(id) {
  * @param {Element} group
  * @param {String} name Unique identifier.
  * @param {Array} data Collection of data object.
+ * @param {Object} latest Most recent measurement for the chart, displayed left.
  * @param {Object} options
  * @api public
  */
-Charts.prototype.add = function add(base, name, data, options) {
+Charts.prototype.add = function add(base, name, data, latest, options) {
   var container = base.append('g').attr('class', 'type ' + name)
     , elements = base.selectAll('.type')[0]
     , margin = this.options.margin
@@ -279,7 +281,7 @@ Charts.prototype.add = function add(base, name, data, options) {
   //
   // Initialize the chart and add it to the stack for reference.
   //
-  this.stack[name] = new Chart(name, container, data, options);
+  this.stack[name] = new Chart(name, container, data, latest, options);
 };
 
 /**
@@ -301,8 +303,8 @@ Charts.prototype.name = function name(type, registry) {
  * @api private
  */
 Charts.prototype.append = function append(probe) {
-  var name = this.name(probe.name, probe.registry);
-  this.stack[name].update(probe.results);
+  var name = this.name(probe.data.name, probe.data.registry);
+  this.stack[name].update(probe);
 };
 
 /**
@@ -312,15 +314,17 @@ Charts.prototype.append = function append(probe) {
  * @param {String} name Unique identifier.
  * @param {Element} SVG element that holds the chart's elements
  * @param {Array} data Collection of data points.
+ * @param {Object} latest Most recent measurement for the chart, displayed left.
  * @param {Object} options
  * @api public
  */
-function Chart(name, container, data, options) {
+function Chart(name, container, data, latest, options) {
   var chart = this
     , i;
 
   this.container = container;
   this.options = options = options || {};
+  this.latest = latest;
   this.data = [];
   this.name = name;
 
@@ -380,7 +384,7 @@ Chart.prototype.statistics = function statistics() {
   this.last = this.text(this.stats, 0, 'value', [120, 40]);
   this.current(
     this.last,
-    this.data[this.data.length - 1].values[this.key],
+    this.latest,
     this.options.animation
   );
 };
@@ -460,11 +464,18 @@ Chart.prototype.text = function text(base, value, className, translate, left) {
  * are visually incremented or decremented via interpolate.
  *
  * @param {Number} value Update to this number.
- * @param {} duration Animation duration.
+ * @param {Number} duration Animation duration.
  * @api public
  */
 Chart.prototype.current = function current(base, value, duration) {
-  base.transition().duration(duration).tween('text', function tween() {
+  //
+  // Current or new value is not a number.
+  //
+  if ('number' !== typeof value || isNaN(+base.text())) {
+    return base.text('number' === typeof value ? Math.round(value) : value);
+  }
+
+  base.transition().duration(duration). tween('text', function tween() {
     var i = d3.interpolate(this.textContent, Math.round(value));
 
     return function loop(t) {
@@ -787,16 +798,16 @@ Chart.prototype.heatmap = function heatmap(base, options) {
 /**
  * Update the chart data and trigger animations on the chart.
  *
- * @param {Object} data Single metric to append to the data.
+ * @param {Object} stack metrics to append to the data.
  * @api public
  */
-Chart.prototype.update = function update(data) {
-  this.data.push(data);
+Chart.prototype.update = function update(stack) {
+  this.data.push(stack.data.results);
 
   //
   // Update the axes and last shown metric.
   //
-  this.current(this.last, data.values[this.key], this.options.animation);
+  this.current(this.last, stack.latest, this.options.animation);
   this.animate(this.options.animation);
 
   //
