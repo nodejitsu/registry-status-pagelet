@@ -2,7 +2,6 @@
 
 var path = require('path')
   , Pagelet = require('pagelet')
-  , Contour = require('contour')
   , options = require('./options')
   , Collector = require('npm-probe');
 
@@ -30,9 +29,7 @@ Pagelet.extend({
   //
   dependencies: [
     '//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js',
-    '//cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js',
-    Contour.get('npm').grid,
-    Contour.get('npm').typography,
+    '//cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js'
   ],
 
   //
