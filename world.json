@@ -141,7 +141,8 @@
         ]
       },
       "properties": {
-        "name": "Afghanistan"
+        "name": "Afghanistan",
+        "continent": "Asia"
       },
       "id": "AF"
     },
@@ -197,7 +198,8 @@
         ]
       },
       "properties": {
-        "name": "Albania"
+        "name": "Albania",
+        "continent": "Europe"
       },
       "id": "AL"
     },
@@ -333,7 +335,8 @@
         ]
       },
       "properties": {
-        "name": "Algeria"
+        "name": "Algeria",
+        "continent": "Africa"
       },
       "id": "DZ"
     },
@@ -385,7 +388,8 @@
         ]
       },
       "properties": {
-        "name": "Samoa"
+        "name": "Samoa",
+        "continent": "Oceania"
       },
       "id": "WS"
     },
@@ -417,7 +421,8 @@
         ]
       },
       "properties": {
-        "name": "Andorra"
+        "name": "Andorra",
+        "continent": "Europe"
       },
       "id": "AD"
     },
@@ -561,7 +566,8 @@
         ]
       },
       "properties": {
-        "name": "Angola"
+        "name": "Angola",
+        "continent": "Africa"
       },
       "id": "AO"
     },
@@ -613,7 +619,8 @@
         ]
       },
       "properties": {
-        "name": "Antigua and Barbuda"
+        "name": "Antigua and Barbuda",
+        "continent": "North America"
       },
       "id": "AG"
     },
@@ -753,7 +760,8 @@
         ]
       },
       "properties": {
-        "name": "Azerbaijan"
+        "name": "Azerbaijan",
+        "continent": "Asia"
       },
       "id": "AZ"
     },
@@ -1141,7 +1149,8 @@
         ]
       },
       "properties": {
-        "name": "Argentina"
+        "name": "Argentina",
+        "continent": "South America"
       },
       "id": "AR"
     },
@@ -1661,7 +1670,8 @@
         ]
       },
       "properties": {
-        "name": "Australia"
+        "name": "Australia",
+        "continent": "Oceania"
       },
       "id": "AU"
     },
@@ -1745,7 +1755,8 @@
         ]
       },
       "properties": {
-        "name": "Austria"
+        "name": "Austria",
+        "continent": "Europe"
       },
       "id": "AT"
     },
@@ -1865,7 +1876,8 @@
         ]
       },
       "properties": {
-        "name": "Bahamas, The"
+        "name": "Bahamas, The",
+        "continent": "North America"
       },
       "id": "BS"
     },
@@ -1897,7 +1909,8 @@
         ]
       },
       "properties": {
-        "name": "Bahrain"
+        "name": "Bahrain",
+        "continent": "Asia"
       },
       "id": "BH"
     },
@@ -2059,7 +2072,8 @@
         ]
       },
       "properties": {
-        "name": "Bangladesh"
+        "name": "Bangladesh",
+        "continent": "Asia"
       },
       "id": "BD"
     },
@@ -2145,7 +2159,8 @@
         ]
       },
       "properties": {
-        "name": "Armenia"
+        "name": "Armenia",
+        "continent": "Asia"
       },
       "id": "AM"
     },
@@ -2177,7 +2192,8 @@
         ]
       },
       "properties": {
-        "name": "Barbados"
+        "name": "Barbados",
+        "continent": "North America"
       },
       "id": "BB"
     },
@@ -2245,7 +2261,8 @@
         ]
       },
       "properties": {
-        "name": "Belgium"
+        "name": "Belgium",
+        "continent": "Europe"
       },
       "id": "BE"
     },
@@ -2277,7 +2294,8 @@
         ]
       },
       "properties": {
-        "name": "Bermuda"
+        "name": "Bermuda",
+        "continent": "North America"
       },
       "id": "BM"
     },
@@ -2321,7 +2339,8 @@
         ]
       },
       "properties": {
-        "name": "Bhutan"
+        "name": "Bhutan",
+        "continent": "Asia"
       },
       "id": "BT"
     },
@@ -2457,7 +2476,8 @@
         ]
       },
       "properties": {
-        "name": "Bolivia"
+        "name": "Bolivia",
+        "continent": "South America"
       },
       "id": "BO"
     },
@@ -2509,7 +2529,8 @@
         ]
       },
       "properties": {
-        "name": "Bosnia and Herzegovina"
+        "name": "Bosnia and Herzegovina",
+        "continent": "Europe"
       },
       "id": "BA"
     },
@@ -2597,7 +2618,8 @@
         ]
       },
       "properties": {
-        "name": "Botswana"
+        "name": "Botswana",
+        "continent": "Africa"
       },
       "id": "BW"
     },
@@ -2629,7 +2651,8 @@
         ]
       },
       "properties": {
-        "name": "Bouvet Island"
+        "name": "Bouvet Island",
+        "continent": "South America"
       },
       "id": "BV"
     },
@@ -3225,7 +3248,8 @@
         ]
       },
       "properties": {
-        "name": "Brazil"
+        "name": "Brazil",
+        "continent": "South America"
       },
       "id": "BR"
     },
@@ -3269,7 +3293,8 @@
         ]
       },
       "properties": {
-        "name": "Belize"
+        "name": "Belize",
+        "continent": "North America"
       },
       "id": "BZ"
     },
@@ -3301,7 +3326,8 @@
         ]
       },
       "properties": {
-        "name": "British Indian Ocean Territory"
+        "name": "British Indian Ocean Territory",
+        "continent": "Asia"
       },
       "id": "IO"
     },
@@ -3437,7 +3463,8 @@
         ]
       },
       "properties": {
-        "name": "Solomon Islands"
+        "name": "Solomon Islands",
+        "continent": "Oceania"
       },
       "id": "SB"
     },
@@ -3469,7 +3496,8 @@
         ]
       },
       "properties": {
-        "name": "British Virgin Islands"
+        "name": "British Virgin Islands",
+        "continent": "North America"
       },
       "id": "VG"
     },
@@ -3529,7 +3557,8 @@
         ]
       },
       "properties": {
-        "name": "Brunei"
+        "name": "Brunei",
+        "continent": "Asia"
       },
       "id": "BN"
     },
@@ -3609,7 +3638,8 @@
         ]
       },
       "properties": {
-        "name": "Bulgaria"
+        "name": "Bulgaria",
+        "continent": "Europe"
       },
       "id": "BG"
     },
@@ -3845,7 +3875,8 @@
         ]
       },
       "properties": {
-        "name": "Burma"
+        "name": "Burma",
+        "continent": "Asia"
       },
       "id": "MM"
     },
@@ -3893,7 +3924,8 @@
         ]
       },
       "properties": {
-        "name": "Burundi"
+        "name": "Burundi",
+        "continent": "Africa"
       },
       "id": "BI"
     },
@@ -3985,7 +4017,8 @@
         ]
       },
       "properties": {
-        "name": "Belarus"
+        "name": "Belarus",
+        "continent": "Europe"
       },
       "id": "BY"
     },
@@ -4069,7 +4102,8 @@
         ]
       },
       "properties": {
-        "name": "Cambodia"
+        "name": "Cambodia",
+        "continent": "Asia"
       },
       "id": "KH"
     },
@@ -4189,7 +4223,8 @@
         ]
       },
       "properties": {
-        "name": "Cameroon"
+        "name": "Cameroon",
+        "continent": "Africa"
       },
       "id": "CM"
     },
@@ -8071,7 +8106,8 @@
         ]
       },
       "properties": {
-        "name": "Canada"
+        "name": "Canada",
+        "continent": "North America"
       },
       "id": "CA"
     },
@@ -8183,7 +8219,8 @@
         ]
       },
       "properties": {
-        "name": "Cape Verde"
+        "name": "Cape Verde",
+        "continent": "Africa"
       },
       "id": "CV"
     },
@@ -8215,7 +8252,8 @@
         ]
       },
       "properties": {
-        "name": "Cayman Islands"
+        "name": "Cayman Islands",
+        "continent": "North America"
       },
       "id": "KY"
     },
@@ -8323,7 +8361,8 @@
         ]
       },
       "properties": {
-        "name": "Central African Republic"
+        "name": "Central African Republic",
+        "continent": "Africa"
       },
       "id": "CF"
     },
@@ -8391,7 +8430,8 @@
         ]
       },
       "properties": {
-        "name": "Sri Lanka"
+        "name": "Sri Lanka",
+        "continent": "Asia"
       },
       "id": "LK"
     },
@@ -8511,7 +8551,8 @@
         ]
       },
       "properties": {
-        "name": "Chad"
+        "name": "Chad",
+        "continent": "Africa"
       },
       "id": "TD"
     },
@@ -9849,7 +9890,8 @@
         ]
       },
       "properties": {
-        "name": "Chile"
+        "name": "Chile",
+        "continent": "South America"
       },
       "id": "CL"
     },
@@ -10569,7 +10611,8 @@
         ]
       },
       "properties": {
-        "name": "China"
+        "name": "China",
+        "continent": "Asia"
       },
       "id": "CN"
     },
@@ -10609,7 +10652,8 @@
         ]
       },
       "properties": {
-        "name": "Taiwan"
+        "name": "Taiwan",
+        "continent": "Asia"
       },
       "id": "TW"
     },
@@ -10641,7 +10685,8 @@
         ]
       },
       "properties": {
-        "name": "Christmas Island"
+        "name": "Christmas Island",
+        "continent": "Oceania"
       },
       "id": "CX"
     },
@@ -10673,7 +10718,8 @@
         ]
       },
       "properties": {
-        "name": "Cocos (Keeling) Islands"
+        "name": "Cocos (Keeling) Islands",
+        "continent": "Oceania"
       },
       "id": "CC"
     },
@@ -10885,7 +10931,8 @@
         ]
       },
       "properties": {
-        "name": "Colombia"
+        "name": "Colombia",
+        "continent": "South America"
       },
       "id": "CO"
     },
@@ -10937,7 +10984,8 @@
         ]
       },
       "properties": {
-        "name": "Comoros"
+        "name": "Comoros",
+        "continent": "Africa"
       },
       "id": "KM"
     },
@@ -10969,7 +11017,8 @@
         ]
       },
       "properties": {
-        "name": "Mayotte"
+        "name": "Mayotte",
+        "continent": "Africa"
       },
       "id": "YT"
     },
@@ -11101,7 +11150,8 @@
         ]
       },
       "properties": {
-        "name": "Congo, Republic of the"
+        "name": "Congo, Republic of the",
+        "continent": "Africa"
       },
       "id": "CG"
     },
@@ -11325,7 +11375,8 @@
         ]
       },
       "properties": {
-        "name": "Congo, Democratic Republic of the"
+        "name": "Congo, Democratic Republic of the",
+        "continent": "Africa"
       },
       "id": "CD"
     },
@@ -11397,7 +11448,8 @@
         ]
       },
       "properties": {
-        "name": "Cook Islands"
+        "name": "Cook Islands",
+        "continent": "Oceania"
       },
       "id": "CK"
     },
@@ -11457,7 +11509,8 @@
         ]
       },
       "properties": {
-        "name": "Costa Rica"
+        "name": "Costa Rica",
+        "continent": "North America"
       },
       "id": "CR"
     },
@@ -11641,7 +11694,8 @@
         ]
       },
       "properties": {
-        "name": "Croatia"
+        "name": "Croatia",
+        "continent": "Europe"
       },
       "id": "HR"
     },
@@ -11757,7 +11811,8 @@
         ]
       },
       "properties": {
-        "name": "Cuba"
+        "name": "Cuba",
+        "continent": "North America"
       },
       "id": "CU"
     },
@@ -11793,7 +11848,8 @@
         ]
       },
       "properties": {
-        "name": "Cyprus"
+        "name": "Cyprus",
+        "continent": "Europe"
       },
       "id": "CY"
     },
@@ -11853,7 +11909,8 @@
         ]
       },
       "properties": {
-        "name": "Czech Republic"
+        "name": "Czech Republic",
+        "continent": "Europe"
       },
       "id": "CZ"
     },
@@ -11917,7 +11974,8 @@
         ]
       },
       "properties": {
-        "name": "Benin"
+        "name": "Benin",
+        "continent": "Africa"
       },
       "id": "BJ"
     },
@@ -12137,7 +12195,8 @@
         ]
       },
       "properties": {
-        "name": "Denmark"
+        "name": "Denmark",
+        "continent": "Europe"
       },
       "id": "DK"
     },
@@ -12169,7 +12228,8 @@
         ]
       },
       "properties": {
-        "name": "Dominica"
+        "name": "Dominica",
+        "continent": "North America"
       },
       "id": "DM"
     },
@@ -12225,7 +12285,8 @@
         ]
       },
       "properties": {
-        "name": "Dominican Republic"
+        "name": "Dominican Republic",
+        "continent": "North America"
       },
       "id": "DO"
     },
@@ -12349,7 +12410,8 @@
         ]
       },
       "properties": {
-        "name": "Ecuador"
+        "name": "Ecuador",
+        "continent": "South America"
       },
       "id": "EC"
     },
@@ -12393,7 +12455,8 @@
         ]
       },
       "properties": {
-        "name": "El Salvador"
+        "name": "El Salvador",
+        "continent": "North America"
       },
       "id": "SV"
     },
@@ -12437,7 +12500,8 @@
         ]
       },
       "properties": {
-        "name": "Equatorial Guinea"
+        "name": "Equatorial Guinea",
+        "continent": "Africa"
       },
       "id": "GQ"
     },
@@ -12561,7 +12625,8 @@
         ]
       },
       "properties": {
-        "name": "Ethiopia"
+        "name": "Ethiopia",
+        "continent": "Africa"
       },
       "id": "ET"
     },
@@ -12637,7 +12702,8 @@
         ]
       },
       "properties": {
-        "name": "Eritrea"
+        "name": "Eritrea",
+        "continent": "Africa"
       },
       "id": "ER"
     },
@@ -12741,7 +12807,8 @@
         ]
       },
       "properties": {
-        "name": "Estonia"
+        "name": "Estonia",
+        "continent": "Europe"
       },
       "id": "EE"
     },
@@ -12813,7 +12880,8 @@
         ]
       },
       "properties": {
-        "name": "Faroe Islands"
+        "name": "Faroe Islands",
+        "continent": "Oceania"
       },
       "id": "FO"
     },
@@ -12873,7 +12941,8 @@
         ]
       },
       "properties": {
-        "name": "Falkland Islands (Islas Malvinas)"
+        "name": "Falkland Islands (Islas Malvinas)",
+        "continent": "South America"
       },
       "id": "FK"
     },
@@ -12905,7 +12974,8 @@
         ]
       },
       "properties": {
-        "name": "South Georgia South Sandwich Islands"
+        "name": "South Georgia South Sandwich Islands",
+        "continent": "South America"
       },
       "id": "GS"
     },
@@ -12965,7 +13035,8 @@
         ]
       },
       "properties": {
-        "name": "Fiji"
+        "name": "Fiji",
+        "continent": "Oceania"
       },
       "id": "FJ"
     },
@@ -13121,7 +13192,8 @@
         ]
       },
       "properties": {
-        "name": "Finland"
+        "name": "Finland",
+        "continent": "Europe"
       },
       "id": "FI"
     },
@@ -13153,7 +13225,8 @@
         ]
       },
       "properties": {
-        "name": "Aland Islands"
+        "name": "Aland Islands",
+        "continent": "Europe"
       },
       "id": "AX"
     },
@@ -13385,7 +13458,8 @@
         ]
       },
       "properties": {
-        "name": "France"
+        "name": "France",
+        "continent": "Europe"
       },
       "id": "FR"
     },
@@ -13449,7 +13523,8 @@
         ]
       },
       "properties": {
-        "name": "French Guiana"
+        "name": "French Guiana",
+        "continent": "South America"
       },
       "id": "GF"
     },
@@ -13541,7 +13616,8 @@
         ]
       },
       "properties": {
-        "name": "French Polynesia"
+        "name": "French Polynesia",
+        "continent": "Oceania"
       },
       "id": "PF"
     },
@@ -13585,7 +13661,8 @@
         ]
       },
       "properties": {
-        "name": "French Southern and Antarctic Lands"
+        "name": "French Southern and Antarctic Lands",
+        "continent": "Oceania"
       },
       "id": "TF"
     },
@@ -13637,7 +13714,8 @@
         ]
       },
       "properties": {
-        "name": "Djibouti"
+        "name": "Djibouti",
+        "continent": "Africa"
       },
       "id": "DJ"
     },
@@ -13757,7 +13835,8 @@
         ]
       },
       "properties": {
-        "name": "Gabon"
+        "name": "Gabon",
+        "continent": "Africa"
       },
       "id": "GA"
     },
@@ -13821,7 +13900,8 @@
         ]
       },
       "properties": {
-        "name": "Georgia"
+        "name": "Georgia",
+        "continent": "Asia"
       },
       "id": "GE"
     },
@@ -13897,7 +13977,8 @@
         ]
       },
       "properties": {
-        "name": "Gambia, The"
+        "name": "Gambia, The",
+        "continent": "Africa"
       },
       "id": "GM"
     },
@@ -13975,7 +14056,8 @@
         ]
       },
       "properties": {
-        "name": "Palestine"
+        "name": "Palestine",
+        "continent": "Asia"
       },
       "id": "PS"
     },
@@ -14119,7 +14201,8 @@
         ]
       },
       "properties": {
-        "name": "Germany"
+        "name": "Germany",
+        "continent": "Europe"
       },
       "id": "DE"
     },
@@ -14243,7 +14326,8 @@
         ]
       },
       "properties": {
-        "name": "Ghana"
+        "name": "Ghana",
+        "continent": "Africa"
       },
       "id": "GH"
     },
@@ -14275,7 +14359,8 @@
         ]
       },
       "properties": {
-        "name": "Gibraltar"
+        "name": "Gibraltar",
+        "continent": "Europe"
       },
       "id": "GI"
     },
@@ -14407,7 +14492,8 @@
         ]
       },
       "properties": {
-        "name": "Kiribati"
+        "name": "Kiribati",
+        "continent": "Oceania"
       },
       "id": "KI"
     },
@@ -14611,7 +14697,8 @@
         ]
       },
       "properties": {
-        "name": "Greece"
+        "name": "Greece",
+        "continent": "Europe"
       },
       "id": "GR"
     },
@@ -15959,7 +16046,8 @@
         ]
       },
       "properties": {
-        "name": "Greenland"
+        "name": "Greenland",
+        "continent": "North America"
       },
       "id": "GL"
     },
@@ -16011,7 +16099,8 @@
         ]
       },
       "properties": {
-        "name": "Grenada"
+        "name": "Grenada",
+        "continent": "North America"
       },
       "id": "GD"
     },
@@ -16043,7 +16132,8 @@
         ]
       },
       "properties": {
-        "name": "Guadeloupe"
+        "name": "Guadeloupe",
+        "continent": "North America"
       },
       "id": "GP"
     },
@@ -16075,7 +16165,8 @@
         ]
       },
       "properties": {
-        "name": "Guam"
+        "name": "Guam",
+        "continent": "Oceania"
       },
       "id": "GU"
     },
@@ -16147,7 +16238,8 @@
         ]
       },
       "properties": {
-        "name": "Guatemala"
+        "name": "Guatemala",
+        "continent": "North America"
       },
       "id": "GT"
     },
@@ -16263,7 +16355,8 @@
         ]
       },
       "properties": {
-        "name": "Guinea"
+        "name": "Guinea",
+        "continent": "Africa"
       },
       "id": "GN"
     },
@@ -16367,7 +16460,8 @@
         ]
       },
       "properties": {
-        "name": "Guyana"
+        "name": "Guyana",
+        "continent": "South America"
       },
       "id": "GY"
     },
@@ -16419,7 +16513,8 @@
         ]
       },
       "properties": {
-        "name": "Haiti"
+        "name": "Haiti",
+        "continent": "North America"
       },
       "id": "HT"
     },
@@ -16451,7 +16546,8 @@
         ]
       },
       "properties": {
-        "name": "Heard Island and McDonald Islands"
+        "name": "Heard Island and McDonald Islands",
+        "continent": "Oceania"
       },
       "id": "HM"
     },
@@ -16483,7 +16579,8 @@
         ]
       },
       "properties": {
-        "name": "Holy See (Vatican City)"
+        "name": "Holy See (Vatican City)",
+        "continent": "Europe"
       },
       "id": "VA"
     },
@@ -16547,7 +16644,8 @@
         ]
       },
       "properties": {
-        "name": "Honduras"
+        "name": "Honduras",
+        "continent": "North America"
       },
       "id": "HN"
     },
@@ -16619,7 +16717,8 @@
         ]
       },
       "properties": {
-        "name": "Hong Kong"
+        "name": "Hong Kong",
+        "continent": "Asia"
       },
       "id": "HK"
     },
@@ -16695,7 +16794,8 @@
         ]
       },
       "properties": {
-        "name": "Hungary"
+        "name": "Hungary",
+        "continent": "Europe"
       },
       "id": "HU"
     },
@@ -16851,7 +16951,8 @@
         ]
       },
       "properties": {
-        "name": "Iceland"
+        "name": "Iceland",
+        "continent": "Europe"
       },
       "id": "IS"
     },
@@ -17251,7 +17352,8 @@
         ]
       },
       "properties": {
-        "name": "India"
+        "name": "India",
+        "continent": "Asia"
       },
       "id": "IN"
     },
@@ -18415,7 +18517,8 @@
         ]
       },
       "properties": {
-        "name": "Indonesia"
+        "name": "Indonesia",
+        "continent": "Asia"
       },
       "id": "ID"
     },
@@ -18631,7 +18734,8 @@
         ]
       },
       "properties": {
-        "name": "Iran"
+        "name": "Iran",
+        "continent": "Asia"
       },
       "id": "IR"
     },
@@ -18735,7 +18839,8 @@
         ]
       },
       "properties": {
-        "name": "Iraq"
+        "name": "Iraq",
+        "continent": "Asia"
       },
       "id": "IQ"
     },
@@ -18839,7 +18944,8 @@
         ]
       },
       "properties": {
-        "name": "Ireland"
+        "name": "Ireland",
+        "continent": "Europe"
       },
       "id": "IE"
     },
@@ -18927,7 +19033,8 @@
         ]
       },
       "properties": {
-        "name": "Israel"
+        "name": "Israel",
+        "continent": "Asia"
       },
       "id": "IL"
     },
@@ -19167,7 +19274,8 @@
         ]
       },
       "properties": {
-        "name": "Italy"
+        "name": "Italy",
+        "continent": "Europe"
       },
       "id": "IT"
     },
@@ -19263,7 +19371,8 @@
         ]
       },
       "properties": {
-        "name": "Cote d'Ivoire"
+        "name": "Cote d'Ivoire",
+        "continent": "Africa"
       },
       "id": "CI"
     },
@@ -19299,7 +19408,8 @@
         ]
       },
       "properties": {
-        "name": "Jamaica"
+        "name": "Jamaica",
+        "continent": "North America"
       },
       "id": "JM"
     },
@@ -19647,7 +19757,8 @@
         ]
       },
       "properties": {
-        "name": "Japan"
+        "name": "Japan",
+        "continent": "Asia"
       },
       "id": "JP"
     },
@@ -20007,7 +20118,8 @@
         ]
       },
       "properties": {
-        "name": "Kazakhstan"
+        "name": "Kazakhstan",
+        "continent": "Asia"
       },
       "id": "KZ"
     },
@@ -20075,7 +20187,8 @@
         ]
       },
       "properties": {
-        "name": "Jordan"
+        "name": "Jordan",
+        "continent": "Asia"
       },
       "id": "JO"
     },
@@ -20159,7 +20272,8 @@
         ]
       },
       "properties": {
-        "name": "Kenya"
+        "name": "Kenya",
+        "continent": "Africa"
       },
       "id": "KE"
     },
@@ -20267,7 +20381,8 @@
         ]
       },
       "properties": {
-        "name": "Korea, North"
+        "name": "Korea, North",
+        "continent": "Asia"
       },
       "id": "KP"
     },
@@ -20327,7 +20442,8 @@
         ]
       },
       "properties": {
-        "name": "Korea, South"
+        "name": "Korea, South",
+        "continent": "Asia"
       },
       "id": "KR"
     },
@@ -20375,7 +20491,8 @@
         ]
       },
       "properties": {
-        "name": "Kuwait"
+        "name": "Kuwait",
+        "continent": "Asia"
       },
       "id": "KW"
     },
@@ -20475,7 +20592,8 @@
         ]
       },
       "properties": {
-        "name": "Kyrgyzstan"
+        "name": "Kyrgyzstan",
+        "continent": "Asia"
       },
       "id": "KG"
     },
@@ -20615,7 +20733,8 @@
         ]
       },
       "properties": {
-        "name": "Laos"
+        "name": "Laos",
+        "continent": "Asia"
       },
       "id": "LA"
     },
@@ -20651,7 +20770,8 @@
         ]
       },
       "properties": {
-        "name": "Lebanon"
+        "name": "Lebanon",
+        "continent": "Asia"
       },
       "id": "LB"
     },
@@ -20695,7 +20815,8 @@
         ]
       },
       "properties": {
-        "name": "Lesotho"
+        "name": "Lesotho",
+        "continent": "Africa"
       },
       "id": "LS"
     },
@@ -20767,7 +20888,8 @@
         ]
       },
       "properties": {
-        "name": "Latvia"
+        "name": "Latvia",
+        "continent": "Europe"
       },
       "id": "LV"
     },
@@ -20823,7 +20945,8 @@
         ]
       },
       "properties": {
-        "name": "Liberia"
+        "name": "Liberia",
+        "continent": "Africa"
       },
       "id": "LR"
     },
@@ -20947,7 +21070,8 @@
         ]
       },
       "properties": {
-        "name": "Libya"
+        "name": "Libya",
+        "continent": "Africa"
       },
       "id": "LY"
     },
@@ -20979,7 +21103,8 @@
         ]
       },
       "properties": {
-        "name": "Liechtenstein"
+        "name": "Liechtenstein",
+        "continent": "Europe"
       },
       "id": "LI"
     },
@@ -21043,7 +21168,8 @@
         ]
       },
       "properties": {
-        "name": "Lithuania"
+        "name": "Lithuania",
+        "continent": "Europe"
       },
       "id": "LT"
     },
@@ -21079,7 +21205,8 @@
         ]
       },
       "properties": {
-        "name": "Luxembourg"
+        "name": "Luxembourg",
+        "continent": "Europe"
       },
       "id": "LU"
     },
@@ -21111,7 +21238,8 @@
         ]
       },
       "properties": {
-        "name": "Macau"
+        "name": "Macau",
+        "continent": "Asia"
       },
       "id": "MO"
     },
@@ -21215,7 +21343,8 @@
         ]
       },
       "properties": {
-        "name": "Madagascar"
+        "name": "Madagascar",
+        "continent": "Africa"
       },
       "id": "MG"
     },
@@ -21351,7 +21480,8 @@
         ]
       },
       "properties": {
-        "name": "Malawi"
+        "name": "Malawi",
+        "continent": "Africa"
       },
       "id": "MW"
     },
@@ -21531,7 +21661,8 @@
         ]
       },
       "properties": {
-        "name": "Malaysia"
+        "name": "Malaysia",
+        "continent": "Asia"
       },
       "id": "MY"
     },
@@ -21663,7 +21794,8 @@
         ]
       },
       "properties": {
-        "name": "Maldives"
+        "name": "Maldives",
+        "continent": "Asia"
       },
       "id": "MV"
     },
@@ -21811,7 +21943,8 @@
         ]
       },
       "properties": {
-        "name": "Mali"
+        "name": "Mali",
+        "continent": "Africa"
       },
       "id": "ML"
     },
@@ -21863,7 +21996,8 @@
         ]
       },
       "properties": {
-        "name": "Malta"
+        "name": "Malta",
+        "continent": "Europe"
       },
       "id": "MT"
     },
@@ -21895,7 +22029,8 @@
         ]
       },
       "properties": {
-        "name": "Martinique"
+        "name": "Martinique",
+        "continent": "North America"
       },
       "id": "MQ"
     },
@@ -22011,7 +22146,8 @@
         ]
       },
       "properties": {
-        "name": "Mauritania"
+        "name": "Mauritania",
+        "continent": "Africa"
       },
       "id": "MR"
     },
@@ -22043,7 +22179,8 @@
         ]
       },
       "properties": {
-        "name": "Mauritius"
+        "name": "Mauritius",
+        "continent": "Africa"
       },
       "id": "MU"
     },
@@ -22347,7 +22484,8 @@
         ]
       },
       "properties": {
-        "name": "Mexico"
+        "name": "Mexico",
+        "continent": "North America"
       },
       "id": "MX"
     },
@@ -22379,7 +22517,8 @@
         ]
       },
       "properties": {
-        "name": "Monaco"
+        "name": "Monaco",
+        "continent": "Europe"
       },
       "id": "MC"
     },
@@ -22531,7 +22670,8 @@
         ]
       },
       "properties": {
-        "name": "Mongolia"
+        "name": "Mongolia",
+        "continent": "Asia"
       },
       "id": "MN"
     },
@@ -22583,7 +22723,8 @@
         ]
       },
       "properties": {
-        "name": "Moldova"
+        "name": "Moldova",
+        "continent": "Europe"
       },
       "id": "MD"
     },
@@ -22631,7 +22772,8 @@
         ]
       },
       "properties": {
-        "name": "Montenegro"
+        "name": "Montenegro",
+        "continent": "Europe"
       },
       "id": "ME"
     },
@@ -22663,7 +22805,8 @@
         ]
       },
       "properties": {
-        "name": "Montserrat"
+        "name": "Montserrat",
+        "continent": "North America"
       },
       "id": "MS"
     },
@@ -22751,7 +22894,8 @@
         ]
       },
       "properties": {
-        "name": "Morocco"
+        "name": "Morocco",
+        "continent": "Africa"
       },
       "id": "MA"
     },
@@ -22955,7 +23099,8 @@
         ]
       },
       "properties": {
-        "name": "Mozambique"
+        "name": "Mozambique",
+        "continent": "Africa"
       },
       "id": "MZ"
     },
@@ -23067,7 +23212,8 @@
         ]
       },
       "properties": {
-        "name": "Oman"
+        "name": "Oman",
+        "continent": "Asia"
       },
       "id": "OM"
     },
@@ -23179,7 +23325,8 @@
         ]
       },
       "properties": {
-        "name": "Namibia"
+        "name": "Namibia",
+        "continent": "Africa"
       },
       "id": "NA"
     },
@@ -23211,7 +23358,8 @@
         ]
       },
       "properties": {
-        "name": "Nauru"
+        "name": "Nauru",
+        "continent": "Oceania"
       },
       "id": "NR"
     },
@@ -23271,7 +23419,8 @@
         ]
       },
       "properties": {
-        "name": "Nepal"
+        "name": "Nepal",
+        "continent": "Asia"
       },
       "id": "NP"
     },
@@ -23483,7 +23632,8 @@
         ]
       },
       "properties": {
-        "name": "Netherlands"
+        "name": "Netherlands",
+        "continent": "Europe"
       },
       "id": "NL"
     },
@@ -23535,7 +23685,8 @@
         ]
       },
       "properties": {
-        "name": "Netherlands Antilles"
+        "name": "Netherlands Antilles",
+        "continent": "North America"
       },
       "id": "AN"
     },
@@ -23567,7 +23718,8 @@
         ]
       },
       "properties": {
-        "name": "Aruba"
+        "name": "Aruba",
+        "continent": "North America"
       },
       "id": "AW"
     },
@@ -23603,7 +23755,8 @@
         ]
       },
       "properties": {
-        "name": "New Caledonia"
+        "name": "New Caledonia",
+        "continent": "Oceania"
       },
       "id": "NC"
     },
@@ -23663,7 +23816,8 @@
         ]
       },
       "properties": {
-        "name": "Vanuatu"
+        "name": "Vanuatu",
+        "continent": "Oceania"
       },
       "id": "VU"
     },
@@ -23859,7 +24013,8 @@
         ]
       },
       "properties": {
-        "name": "New Zealand"
+        "name": "New Zealand",
+        "continent": "Oceania"
       },
       "id": "NZ"
     },
@@ -23915,7 +24070,8 @@
         ]
       },
       "properties": {
-        "name": "Nicaragua"
+        "name": "Nicaragua",
+        "continent": "North America"
       },
       "id": "NI"
     },
@@ -24047,7 +24203,8 @@
         ]
       },
       "properties": {
-        "name": "Niger"
+        "name": "Niger",
+        "continent": "Africa"
       },
       "id": "NE"
     },
@@ -24187,7 +24344,8 @@
         ]
       },
       "properties": {
-        "name": "Nigeria"
+        "name": "Nigeria",
+        "continent": "Africa"
       },
       "id": "NG"
     },
@@ -24219,7 +24377,8 @@
         ]
       },
       "properties": {
-        "name": "Niue"
+        "name": "Niue",
+        "continent": "Oceania"
       },
       "id": "NU"
     },
@@ -24251,7 +24410,8 @@
         ]
       },
       "properties": {
-        "name": "Norfolk Island"
+        "name": "Norfolk Island",
+        "continent": "Oceania"
       },
       "id": "NF"
     },
@@ -25125,7 +25285,8 @@
         ]
       },
       "properties": {
-        "name": "Norway"
+        "name": "Norway",
+        "continent": "Europe"
       },
       "id": "NO"
     },
@@ -25237,7 +25398,8 @@
         ]
       },
       "properties": {
-        "name": "Northern Mariana Islands"
+        "name": "Northern Mariana Islands",
+        "continent": "Oceania"
       },
       "id": "MP"
     },
@@ -25309,7 +25471,8 @@
         ]
       },
       "properties": {
-        "name": "Micronesia, Federated States of"
+        "name": "Micronesia, Federated States of",
+        "continent": "Oceania"
       },
       "id": "FM"
     },
@@ -25381,7 +25544,8 @@
         ]
       },
       "properties": {
-        "name": "Marshall Islands"
+        "name": "Marshall Islands",
+        "continent": "Oceania"
       },
       "id": "MH"
     },
@@ -25413,7 +25577,8 @@
         ]
       },
       "properties": {
-        "name": "Palau"
+        "name": "Palau",
+        "continent": "Oceania"
       },
       "id": "PW"
     },
@@ -25593,7 +25758,8 @@
         ]
       },
       "properties": {
-        "name": "Pakistan"
+        "name": "Pakistan",
+        "continent": "Asia"
       },
       "id": "PK"
     },
@@ -25681,7 +25847,8 @@
         ]
       },
       "properties": {
-        "name": "Panama"
+        "name": "Panama",
+        "continent": "North America"
       },
       "id": "PA"
     },
@@ -25865,7 +26032,8 @@
         ]
       },
       "properties": {
-        "name": "Papua New Guinea"
+        "name": "Papua New Guinea",
+        "continent": "Oceania"
       },
       "id": "PG"
     },
@@ -25949,7 +26117,8 @@
         ]
       },
       "properties": {
-        "name": "Paraguay"
+        "name": "Paraguay",
+        "continent": "South America"
       },
       "id": "PY"
     },
@@ -26121,7 +26290,8 @@
         ]
       },
       "properties": {
-        "name": "Peru"
+        "name": "Peru",
+        "continent": "South America"
       },
       "id": "PE"
     },
@@ -26541,7 +26711,8 @@
         ]
       },
       "properties": {
-        "name": "Philippines"
+        "name": "Philippines",
+        "continent": "Asia"
       },
       "id": "PH"
     },
@@ -26573,7 +26744,8 @@
         ]
       },
       "properties": {
-        "name": "Pitcairn Islands"
+        "name": "Pitcairn Islands",
+        "continent": "Asia"
       },
       "id": "PN"
     },
@@ -26657,7 +26829,8 @@
         ]
       },
       "properties": {
-        "name": "Poland"
+        "name": "Poland",
+        "continent": "Europe"
       },
       "id": "PL"
     },
@@ -26737,7 +26910,8 @@
         ]
       },
       "properties": {
-        "name": "Portugal"
+        "name": "Portugal",
+        "continent": "Europe"
       },
       "id": "PT"
     },
@@ -26813,7 +26987,8 @@
         ]
       },
       "properties": {
-        "name": "Guinea-Bissau"
+        "name": "Guinea-Bissau",
+        "continent": "Africa"
       },
       "id": "GW"
     },
@@ -26869,7 +27044,8 @@
         ]
       },
       "properties": {
-        "name": "Timor-Leste"
+        "name": "Timor-Leste",
+        "continent": "Asia"
       },
       "id": "TL"
     },
@@ -26901,7 +27077,8 @@
         ]
       },
       "properties": {
-        "name": "Puerto Rico"
+        "name": "Puerto Rico",
+        "continent": "North America"
       },
       "id": "PR"
     },
@@ -26941,7 +27118,8 @@
         ]
       },
       "properties": {
-        "name": "Qatar"
+        "name": "Qatar",
+        "continent": "Asia"
       },
       "id": "QA"
     },
@@ -26973,7 +27151,8 @@
         ]
       },
       "properties": {
-        "name": "Reunion"
+        "name": "Reunion",
+        "continent": "Africa"
       },
       "id": "RE"
     },
@@ -27061,7 +27240,8 @@
         ]
       },
       "properties": {
-        "name": "Romania"
+        "name": "Romania",
+        "continent": "Europe"
       },
       "id": "RO"
     },
@@ -29419,7 +29599,8 @@
         ]
       },
       "properties": {
-        "name": "Russia"
+        "name": "Russia",
+        "continent": "Asia"
       },
       "id": "RU"
     },
@@ -29467,7 +29648,8 @@
         ]
       },
       "properties": {
-        "name": "Rwanda"
+        "name": "Rwanda",
+        "continent": "Africa"
       },
       "id": "RW"
     },
@@ -29499,7 +29681,8 @@
         ]
       },
       "properties": {
-        "name": "Saint Barthelemy"
+        "name": "Saint Barthelemy",
+        "continent": "North America"
       },
       "id": "BL"
     },
@@ -29531,7 +29714,8 @@
         ]
       },
       "properties": {
-        "name": "Saint Helena"
+        "name": "Saint Helena",
+        "continent": "Africa"
       },
       "id": "SH"
     },
@@ -29583,7 +29767,8 @@
         ]
       },
       "properties": {
-        "name": "Saint Kitts and Nevis"
+        "name": "Saint Kitts and Nevis",
+        "continent": "North America"
       },
       "id": "KN"
     },
@@ -29615,7 +29800,8 @@
         ]
       },
       "properties": {
-        "name": "Anguilla"
+        "name": "Anguilla",
+        "continent": "North America"
       },
       "id": "AI"
     },
@@ -29647,7 +29833,8 @@
         ]
       },
       "properties": {
-        "name": "Saint Lucia"
+        "name": "Saint Lucia",
+        "continent": "North America"
       },
       "id": "LC"
     },
@@ -29679,7 +29866,8 @@
         ]
       },
       "properties": {
-        "name": "Saint Martin"
+        "name": "Saint Martin",
+        "continent": "North America"
       },
       "id": "MF"
     },
@@ -29731,7 +29919,8 @@
         ]
       },
       "properties": {
-        "name": "Saint Pierre and Miquelon"
+        "name": "Saint Pierre and Miquelon",
+        "continent": "North America"
       },
       "id": "PM"
     },
@@ -29763,7 +29952,8 @@
         ]
       },
       "properties": {
-        "name": "Saint Vincent and the Grenadines"
+        "name": "Saint Vincent and the Grenadines",
+        "continent": "North America"
       },
       "id": "VC"
     },
@@ -29795,7 +29985,8 @@
         ]
       },
       "properties": {
-        "name": "San Marino"
+        "name": "San Marino",
+        "continent": "Europe"
       },
       "id": "SM"
     },
@@ -29847,7 +30038,8 @@
         ]
       },
       "properties": {
-        "name": "Sao Tome and Principe"
+        "name": "Sao Tome and Principe",
+        "continent": "Africa"
       },
       "id": "ST"
     },
@@ -29999,7 +30191,8 @@
         ]
       },
       "properties": {
-        "name": "Saudi Arabia"
+        "name": "Saudi Arabia",
+        "continent": "Asia"
       },
       "id": "SA"
     },
@@ -30107,7 +30300,8 @@
         ]
       },
       "properties": {
-        "name": "Senegal"
+        "name": "Senegal",
+        "continent": "Africa"
       },
       "id": "SN"
     },
@@ -30191,7 +30385,8 @@
         ]
       },
       "properties": {
-        "name": "Serbia"
+        "name": "Serbia",
+        "continent": "Europe"
       },
       "id": "RS"
     },
@@ -30223,7 +30418,8 @@
         ]
       },
       "properties": {
-        "name": "Seychelles"
+        "name": "Seychelles",
+        "continent": "Africa"
       },
       "id": "SC"
     },
@@ -30275,7 +30471,8 @@
         ]
       },
       "properties": {
-        "name": "Sierra Leone"
+        "name": "Sierra Leone",
+        "continent": "Africa"
       },
       "id": "SL"
     },
@@ -30307,7 +30504,8 @@
         ]
       },
       "properties": {
-        "name": "Singapore"
+        "name": "Singapore",
+        "continent": "Asia"
       },
       "id": "SG"
     },
@@ -30359,7 +30557,8 @@
         ]
       },
       "properties": {
-        "name": "Slovakia"
+        "name": "Slovakia",
+        "continent": "Europe"
       },
       "id": "SK"
     },
@@ -30555,7 +30754,8 @@
         ]
       },
       "properties": {
-        "name": "Vietnam"
+        "name": "Vietnam",
+        "continent": "Asia"
       },
       "id": "VN"
     },
@@ -30611,7 +30811,8 @@
         ]
       },
       "properties": {
-        "name": "Slovenia"
+        "name": "Slovenia",
+        "continent": "Europe"
       },
       "id": "SI"
     },
@@ -30715,7 +30916,8 @@
         ]
       },
       "properties": {
-        "name": "Somalia"
+        "name": "Somalia",
+        "continent": "Africa"
       },
       "id": "SO"
     },
@@ -30897,7 +31099,8 @@
         ]
       },
       "properties": {
-        "name": "South Africa"
+        "name": "South Africa",
+        "continent": "Africa"
       },
       "id": "ZA"
     },
@@ -30981,7 +31184,8 @@
         ]
       },
       "properties": {
-        "name": "Zimbabwe"
+        "name": "Zimbabwe",
+        "continent": "Africa"
       },
       "id": "ZW"
     },
@@ -31149,7 +31353,8 @@
         ]
       },
       "properties": {
-        "name": "Spain"
+        "name": "Spain",
+        "continent": "Europe"
       },
       "id": "ES"
     },
@@ -31281,7 +31486,8 @@
         ]
       },
       "properties": {
-        "name": "Western Sahara"
+        "name": "Western Sahara",
+        "continent": "Africa"
       },
       "id": "EH"
     },
@@ -31437,7 +31643,8 @@
         ]
       },
       "properties": {
-        "name": "Sudan"
+        "name": "Sudan",
+        "continent": "Africa"
       },
       "id": "SD"
     },
@@ -31505,7 +31712,8 @@
         ]
       },
       "properties": {
-        "name": "Suriname"
+        "name": "Suriname",
+        "continent": "South America"
       },
       "id": "SR"
     },
@@ -31793,7 +32001,8 @@
         ]
       },
       "properties": {
-        "name": "Svalbard"
+        "name": "Svalbard",
+        "continent": "Europe"
       },
       "id": "SJ"
     },
@@ -31837,7 +32046,8 @@
         ]
       },
       "properties": {
-        "name": "Swaziland"
+        "name": "Swaziland",
+        "continent": "Africa"
       },
       "id": "SZ"
     },
@@ -32105,7 +32315,8 @@
         ]
       },
       "properties": {
-        "name": "Sweden"
+        "name": "Sweden",
+        "continent": "Europe"
       },
       "id": "SE"
     },
@@ -32209,7 +32420,8 @@
         ]
       },
       "properties": {
-        "name": "Switzerland"
+        "name": "Switzerland",
+        "continent": "Europe"
       },
       "id": "CH"
     },
@@ -32277,7 +32489,8 @@
         ]
       },
       "properties": {
-        "name": "Syria"
+        "name": "Syria",
+        "continent": "Asia"
       },
       "id": "SY"
     },
@@ -32381,7 +32594,8 @@
         ]
       },
       "properties": {
-        "name": "Tajikistan"
+        "name": "Tajikistan",
+        "continent": "Asia"
       },
       "id": "TJ"
     },
@@ -32557,7 +32771,8 @@
         ]
       },
       "properties": {
-        "name": "Thailand"
+        "name": "Thailand",
+        "continent": "Asia"
       },
       "id": "TH"
     },
@@ -32609,7 +32824,8 @@
         ]
       },
       "properties": {
-        "name": "Togo"
+        "name": "Togo",
+        "continent": "Africa"
       },
       "id": "TG"
     },
@@ -32641,7 +32857,8 @@
         ]
       },
       "properties": {
-        "name": "Tokelau"
+        "name": "Tokelau",
+        "continent": "Oceania"
       },
       "id": "TK"
     },
@@ -32673,7 +32890,8 @@
         ]
       },
       "properties": {
-        "name": "Tonga"
+        "name": "Tonga",
+        "continent": "Oceania"
       },
       "id": "TO"
     },
@@ -32733,7 +32951,8 @@
         ]
       },
       "properties": {
-        "name": "Trinidad and Tobago"
+        "name": "Trinidad and Tobago",
+        "continent": "North America"
       },
       "id": "TT"
     },
@@ -32789,7 +33008,8 @@
         ]
       },
       "properties": {
-        "name": "United Arab Emirates"
+        "name": "United Arab Emirates",
+        "continent": "Asia"
       },
       "id": "AE"
     },
@@ -32873,7 +33093,8 @@
         ]
       },
       "properties": {
-        "name": "Tunisia"
+        "name": "Tunisia",
+        "continent": "Africa"
       },
       "id": "TN"
     },
@@ -33085,7 +33306,8 @@
         ]
       },
       "properties": {
-        "name": "Turkey"
+        "name": "Turkey",
+        "continent": "Asia"
       },
       "id": "TR"
     },
@@ -33253,7 +33475,8 @@
         ]
       },
       "properties": {
-        "name": "Turkmenistan"
+        "name": "Turkmenistan",
+        "continent": "Asia"
       },
       "id": "TM"
     },
@@ -33305,7 +33528,8 @@
         ]
       },
       "properties": {
-        "name": "Turks and Caicos Islands"
+        "name": "Turks and Caicos Islands",
+        "continent": "North America"
       },
       "id": "TC"
     },
@@ -33337,7 +33561,8 @@
         ]
       },
       "properties": {
-        "name": "Tuvalu"
+        "name": "Tuvalu",
+        "continent": "Oceania"
       },
       "id": "TV"
     },
@@ -33405,7 +33630,8 @@
         ]
       },
       "properties": {
-        "name": "Uganda"
+        "name": "Uganda",
+        "continent": "Africa"
       },
       "id": "UG"
     },
@@ -33713,7 +33939,8 @@
         ]
       },
       "properties": {
-        "name": "Ukraine"
+        "name": "Ukraine",
+        "continent": "Europe"
       },
       "id": "UA"
     },
@@ -33753,7 +33980,8 @@
         ]
       },
       "properties": {
-        "name": "Macedonia"
+        "name": "Macedonia",
+        "continent": "Europe"
       },
       "id": "MK"
     },
@@ -33853,7 +34081,8 @@
         ]
       },
       "properties": {
-        "name": "Egypt"
+        "name": "Egypt",
+        "continent": "Africa"
       },
       "id": "EG"
     },
@@ -34201,7 +34430,8 @@
         ]
       },
       "properties": {
-        "name": "United Kingdom"
+        "name": "United Kingdom",
+        "continent": "Europe"
       },
       "id": "GB"
     },
@@ -34233,7 +34463,8 @@
         ]
       },
       "properties": {
-        "name": "Guernsey"
+        "name": "Guernsey",
+        "continent": "Europe"
       },
       "id": "GG"
     },
@@ -34265,7 +34496,8 @@
         ]
       },
       "properties": {
-        "name": "Jersey"
+        "name": "Jersey",
+        "continent": "Europe"
       },
       "id": "JE"
     },
@@ -34297,7 +34529,8 @@
         ]
       },
       "properties": {
-        "name": "Isle of Man"
+        "name": "Isle of Man",
+        "continent": "Europe"
       },
       "id": "IM"
     },
@@ -34401,7 +34634,8 @@
         ]
       },
       "properties": {
-        "name": "Tanzania"
+        "name": "Tanzania",
+        "continent": "Africa"
       },
       "id": "TZ"
     },
@@ -35813,7 +36047,8 @@
         ]
       },
       "properties": {
-        "name": "United States"
+        "name": "United States",
+        "continent": "North America"
       },
       "id": "US"
     },
@@ -35845,7 +36080,8 @@
         ]
       },
       "properties": {
-        "name": "Virgin Islands"
+        "name": "Virgin Islands",
+        "continent": "North America"
       },
       "id": "VI"
     },
@@ -35941,7 +36177,8 @@
         ]
       },
       "properties": {
-        "name": "Burkina Faso"
+        "name": "Burkina Faso",
+        "continent": "Africa"
       },
       "id": "BF"
     },
@@ -36033,7 +36270,8 @@
         ]
       },
       "properties": {
-        "name": "Uruguay"
+        "name": "Uruguay",
+        "continent": "South America"
       },
       "id": "UY"
     },
@@ -36205,7 +36443,8 @@
         ]
       },
       "properties": {
-        "name": "Uzbekistan"
+        "name": "Uzbekistan",
+        "continent": "Asia"
       },
       "id": "UZ"
     },
@@ -36425,7 +36664,8 @@
         ]
       },
       "properties": {
-        "name": "Venezuela"
+        "name": "Venezuela",
+        "continent": "South America"
       },
       "id": "VE"
     },
@@ -36477,7 +36717,8 @@
         ]
       },
       "properties": {
-        "name": "Wallis and Futuna"
+        "name": "Wallis and Futuna",
+        "continent": "Oceania"
       },
       "id": "WF"
     },
@@ -36529,7 +36770,8 @@
         ]
       },
       "properties": {
-        "name": "Samoa"
+        "name": "Samoa",
+        "continent": "Oceania"
       },
       "id": "WS"
     },
@@ -36597,7 +36839,8 @@
         ]
       },
       "properties": {
-        "name": "Yemen"
+        "name": "Yemen",
+        "continent": "Asia"
       },
       "id": "YE"
     },
@@ -36741,7 +36984,8 @@
         ]
       },
       "properties": {
-        "name": "Zambia"
+        "name": "Zambia",
+        "continent": "Africa"
       },
       "id": "ZM"
     }

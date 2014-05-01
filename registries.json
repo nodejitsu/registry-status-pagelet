@@ -2,45 +2,93 @@
   {
     "id": "sf",
     "lonlat": [-122.3984, 37.7989],
-    "names": {
-      "npmjs": "npmjs.org",
-      "fullfat": "Fullfat mirror"
-    }
+    "registries": [
+      {
+        "name":    "npmjs",
+        "display": "npm Inc.",
+        "url":     "registry.npmjs.com",
+        "type":    "corporate",
+        "icon":    "C"
+      },
+      {
+        "name":    "fullfat",
+        "display": "npm Inc. (fullfatdb)",
+        "url":     "fullfatdb.npmjs.com",
+        "type":    "corporate",
+        "icon":    "C"
+      }
+    ]
   },
   {
     "id": "atlanta",
     "lonlat": [-84.3915, 33.7516],
-    "names": {
-      "nodejitsu": "Nodejitsu.com"
-    }
+    "registries": [
+      {
+        "name":    "nodejitsu",
+        "display": "Nodejitsu",
+        "url":     "registry.nodejitsu.com",
+        "type":    "corporate",
+        "icon":    "C"
+     }
+    ]
   },
   {
     "id": "dallas",
     "lonlat": [-96.8353, 32.9299],
-    "names": {
-      "iriscouch": "Iriscouch mirror",
-      "strongloop": "Strongloop.com"
-    }
-  },
-  {
-    "id": "sydney",
-    "lonlat": [151.03911, -33.95567],
-    "names": {
-      "npmjsau": "Australian mirror"
-    }
+    "registries": [
+      {
+        "name":    "iriscouch",
+        "display": "Nodejitsu (IrisCouch)",
+        "url":     "isaacs.iriscouch.com",
+        "type":    "corporate",
+        "icon":    "C"
+     },
+      {
+        "name":    "strongloop",
+        "display": "StrongLoop Inc.",
+        "url":     "npm.strongloop.com",
+        "type":    "corporate",
+        "icon":    "C"
+     }
+    ]
   },
   {
     "id": "nuremberg",
     "lonlat": [11.07787, 49.45476],
-    "names": {
-      "npmjseu": "European mirror"
-    }
+    "registries": [
+      {
+        "name":    "npmjseu",
+        "display": "European mirror",
+        "url":     "registry.npmjs.eu",
+        "type":    "community",
+        "icon":    "CM"
+      }
+    ]
   },
   {
     "id": "beijing",
     "lonlat": [116.40753, 39.90403],
-    "names": {
-      "cnpmjs": "Chinese mirror"
-    }
+    "registries": [
+      {
+        "name":    "cnpmjs",
+        "display": "Chinese mirror",
+        "url":     "registry.cnpmjs.org",
+        "type":    "community",
+        "icon":    "CM"
+      }
+    ]
+  },
+  {
+    "id": "sydney",
+    "lonlat": [151.03911, -33.95567],
+    "registries": [
+      {
+        "name":    "npmjsau",
+        "display": "Australian mirror",
+        "url":     "registry.npmjs.au",
+        "type":    "community",
+        "icon":    "CM"
+      }
+    ]
   }
 ]
