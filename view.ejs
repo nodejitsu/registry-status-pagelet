@@ -7,11 +7,11 @@
       <% registries.forEach(function (location) { %>
         <% location.registries.forEach(function (registry) { %>
           <li id="<%- registry.name %>">
-            <a href="#<%- registry.name %>">
+            <a href="#<%- registry.name %>" class="row">
               <div><%- registry.display %></div>
               <div class="registry-details">
-                <span><%- registry.url %></span>
-                <span><%- registry.icon %></span>
+                <span class="sixcol"><%- registry.url %></span>
+                <span class="sixcol last icon"><%- registry.icon %></span>
               </div>
             </a>
           </li>

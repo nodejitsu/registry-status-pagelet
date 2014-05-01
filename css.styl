@@ -12,18 +12,14 @@ $highlight = #f4f4f4
 
   ul
     padding-left: 0
-    margin-top: 10px
+    margin: 0
 
   li
     font-weight: bold
     list-style: none
     height: 38px
-    padding: 2px .5em 0 .5em
+    padding: 0 .5em
     cursor: pointer
-
-    div
-      margin: 0
-      padding: 0
 
     &:hover
       background-color: $base
@@ -34,6 +30,9 @@ $highlight = #f4f4f4
     &:target:not(:hover)
       background-color: $highlight
 
+    div
+      height: 1em
+
   a
     display: block
     color: $base
@@ -43,14 +42,10 @@ $highlight = #f4f4f4
 
   .registry-details
     font-size: 12px
+    color: #AAA
 
-    span
-
-      &:first-child
-        float: left
-
-      &:last-child
-        float: right
+  .icon
+    text-align: right
 
 .charts
   .axis
