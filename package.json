@@ -1,6 +1,6 @@
 {
   "name": "registry-status-pagelet",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pagelet with visual status overview of npm registries",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,6 @@
   "dependencies": {
     "ejs": "~1.0.0",
     "pagelet": "~0.3.3",
-    "npm-probe": "~0.0.12"
+    "npm-probe": "~0.1.0"
   }
 }

@@ -58,6 +58,20 @@ Pagelet.extend({
   //
   options: options,
 
+  //
+  // By default the data collector can be a plain EventEmitter instance. Add
+  // something like the npm-probe module to collect data from each of the npm
+  // mirrors and the main npm registry itself. Object representation should
+  // follow pattern status.type.registry[{t: Date, values: { this.key }, .. ].
+  //
+  status: null,
+
+  //
+  // Most recent measurement/content to be displayed for each data type.
+  // Object representation should follow pattern latest.type.registry.value.
+  //
+  latest: null,
+
   /**
    * Create backwards domain based on end and interval repeated n times.
    *
@@ -95,24 +109,6 @@ Pagelet.extend({
     return this;
   },
 
-  //
-  // By default the data collector can be a plain EventEmitter instance. Add
-  // something like the npm-probe module to collect data from each of the npm
-  // mirrors and the main npm registry itself.
-  //
-  // TODO: client makes assumptions about data structure, render should work without
-  //
-  status: {
-    ping: {}
-  },
-
-  //
-  // Most recent measurement/content to be displayed for each data type.
-  //
-  latest: {
-
-  },
-
   /**
    * Prepare the data for rendering. All the data that is send to the callback
    * is exposed in the template.
@@ -143,5 +139,5 @@ Pagelet.extend({
     this.set('publish.y.domain', [0, 100]);
 
     next(null, this);
-  },
+  }
 }).on(module);

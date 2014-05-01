@@ -345,7 +345,7 @@ function Chart(name, container, data, latest, options) {
   //
   // Select the end of the data range equal to the number of steps.
   //
-  i = this.n < data.length ? this.n : data.length;
+  i = this.n < data.length ? this.n : data.length + 1;
   while (--i) { this.data.push(data[data.length - i]); }
 
   //
