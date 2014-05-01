@@ -5,7 +5,7 @@
 //
 module.exports = {
   animation: 1000,    // Amount of milliseconds an animation should take
-  height: 300,        // Height of the widget in pixels
+  height: 324,        // Height of the widget in pixels
   width: 942,         // Width of the widget in pixels === grid.row.tencol
   scale: 105,         // Relative scale of the map
   ratio: 0.58,        // Relative width of map
