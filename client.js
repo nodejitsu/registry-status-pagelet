@@ -16,38 +16,6 @@ function Map(data, dispatch) {
   this.dispatch = dispatch;
   this.options  = data.options || {};
   this.data     = data;
-  this.colors   = this.options.colors || {
-    'north-america': '#a7cf37',
-    'south-america': '#bdce36',
-    'asia':          '#c77f33',
-    'europe':        '#c46833',
-    'africa':        '#ccb033',
-    'oceania':       '#bf3d33'
-    //
-    // Full complement from
-    // "npm color"
-    //
-    // @color1: #bf3d33;
-    // @color2: #c15233;
-    // @color3: #c46833;
-    // @color4: #c77f33;
-    // @color5: #c99733;
-    // @color6: #ccb033;
-    // @color7: #cdc834;
-    // @color8: #bdce36;
-    // @color9: #a7cf37;
-    // @color10: #91d039;
-    //
-    // Alternate 1 -- other color scheme
-    //
-    // 'north-america': '#688270',
-    // 'south-america': '#6c9378',
-    // 'asia':          '#aa7e7b',
-    // 'europe':        '#ad927c',
-    // 'africa':        '#afa67e',
-    // 'oceania':       '#a8b280'
-    //
-  }
 }
 
 /**
@@ -88,29 +56,19 @@ Map.prototype.draw = function draw() {
   //
   world.selectAll('path')
     .data(this.data.world.features)
-  .enter()
+    .enter()
     .append('path')
-      //
-      // Useful for debugging coloring...
-      //
-      // .attr('class', function (d) {
-      //   return [
-      //     d.properties.name
-      //       .toLowerCase()
-      //       .replace(/\s/g, '-'),
-      //     d.properties.continent
-      //       .toLowerCase()
-      //       .replace(' ', '-')
-      //   ].join(' ')
-      // })
-      .style('fill', function (d) {
-        var key = d.properties.continent
+    .attr('d', this.path)
+    .attr('class', function (d) {
+      return [
+        d.properties.name
           .toLowerCase()
-          .replace(' ', '-');
-
-        return d3.rgb(colors[key]);
-      })
-      .attr('d', this.path);
+          .replace(/\s/g, '-'),
+        d.properties.continent
+          .toLowerCase()
+          .replace(' ', '-')
+      ].join(' ');
+    });
 
   //
   // Update the position of the drawn map relative to the containing SVG element.
