@@ -782,7 +782,8 @@ Chart.prototype.heatmap = function heatmap(base, options) {
     .attr('width', width)
     .attr('height', height)
     .attr('class', function (d) {
-      return 'heatmap hecta-' + Math.round(d.values.n / 10);
+      var value = Math.round(d.values.n / 10);
+      return 'heatmap hecta-' + (value < 10 ? value : 10);
     })
     .attr('x', function (d) {
       return Math.round(chart.x.scale(d.t));
