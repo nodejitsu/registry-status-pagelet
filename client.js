@@ -234,6 +234,11 @@ Charts.prototype.select = function select(id) {
   var duration = this.options.animation / 4;
 
   //
+  // Return if the current registry is already displayed.
+  //
+  if (this.container.select('.show.' + id)[0]) return;
+
+  //
   // Hide current registry charts.
   //
   this.container.selectAll('.registry.show')
