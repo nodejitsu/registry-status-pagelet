@@ -236,7 +236,7 @@ Charts.prototype.select = function select(id) {
   //
   // Return if the current registry is already displayed.
   //
-  if (this.container.select('.show.' + id)[0]) return;
+  if (this.container.select('.show.' + id)[0][0]) return;
 
   //
   // Hide current registry charts.
