@@ -48,8 +48,8 @@ module.exports = {
   delta: {
     title: 'Replication lag',
     visual: 'heatmap',
-    unit: 'days',
-    key: 'days',
+    unit: 'hours',
+    key: 'lag',
     step: 864E5,
     n: 40,
     x: {
