@@ -930,7 +930,14 @@ pipe.once('status::initialise', function init(pagelet) {
   function change(id) {
     id = id || this.id;
 
+    charts.select(id);
     registries.highlight(id);
-    charts.select(id || this.id);
+
+    //
+    // Highlight selected registry.
+    //
+    if (d3.event) d3.event.preventDefault();
+    d3.selectAll('.registries li').classed('highlight', false);
+    d3.select('#' + id).classed('highlight', true);
   }
 });
