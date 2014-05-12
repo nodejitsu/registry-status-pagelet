@@ -795,16 +795,6 @@ Chart.prototype.heatmap = function heatmap(base, options) {
     })
     .attr('y', function (d) {
       return Math.round(chart.y.scale(d.values.type));
-    })
-    .on('click', function click(d) {
-      var length = d.values.modules.length;
-      if (!length) return;
-
-      chart.tooltip([
-        '<strong>Unsynchronised modules: </strong>',
-        d.values.modules.slice(0, 10).join(', '),
-        length > 10 ? ' <strong>and ' + (length - 10) + ' more...</strong>' : '.'
-      ].join(''));
     });
 
   return {

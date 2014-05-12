@@ -1,6 +1,6 @@
 {
   "name": "registry-status-pagelet",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Pagelet with visual status overview of npm registries",
   "main": "index.js",
   "scripts": {
