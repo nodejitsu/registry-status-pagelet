@@ -137,7 +137,7 @@ Registries.prototype.id = function id(datum) {
 };
 
 /**
- * Higlight the selected registry.
+ * Highlight the selected registry.
  *
  * @param {String} className
  * @api public
@@ -305,7 +305,7 @@ Charts.prototype.add = function add(base, name, data, latest, options) {
  * Create unique identifier for a chart based on data type and registry name.
  *
  * @param {String} type Data type, per example ping.
- * @param {String} registry Name of the registry, per example nodejitsu.
+ * @param {String} registry Name of the registry, per example Nodejitsu.
  * @return {String} unique identifier
  * @api public
  */
@@ -378,7 +378,7 @@ function Chart(name, container, data, latest, options) {
 }
 
 /**
- * Add staticstics container to the chart. This contains the metric's name, unit
+ * Add statistics container to the chart. This contains the metric's name, unit
  * and most recent value.
  *
  * @api private
@@ -436,13 +436,13 @@ Chart.prototype.visuals = function visuals() {
     .attr('height', options.height - 1);
 
   //
-  // Add the axes and data serie.
+  // Add the axes and data series.
   //
   this.x = this.time(this.chart, options);
   this.y = this.units(this.chart, options);
 
   //
-  // Add grid lines if required and add the actual data serie.
+  // Add grid lines if required and add the actual data series.
   //
   if (options.y.grid) this.grid(this.chart, options);
   if (options.x.grid) this.grid(this.chart, options, true);
@@ -879,7 +879,7 @@ Chart.prototype.tooltip = function tooltip(content, hide) {
 //
 // Initialize the map from the data and options.
 //
-pipe.once('status::initialise', function init(pagelet) {
+pipe.once('status:initialize', function init(pagelet) {
   var hash = window.location.hash
     , dispatch = d3.dispatch('select')
     , holder = d3.select(pagelet.placeholders[0]).select('.row .svg')
@@ -899,7 +899,7 @@ pipe.once('status::initialise', function init(pagelet) {
 
   //
   // Show npmjs.org main registry by default, yes I know not
-  // even the nodejitsu mirror first, weird huh ;)
+  // even the Nodejitsu mirror first, weird huh ;)
   //
   change(!hash ? 'npmjs' : hash.slice(1));
 
