@@ -1,6 +1,6 @@
 {
   "name": "registry-status-pagelet",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Pagelet with visual status overview of npm registries",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,7 @@
   "homepage": "https://github.com/nodejitsu/registry-status-pagelet",
   "dependencies": {
     "ejs": "1.0.x",
-    "pagelet": "0.6.x",
+    "pagelet": "0.7.x",
     "npm-probe": "0.1.x"
   }
 }
