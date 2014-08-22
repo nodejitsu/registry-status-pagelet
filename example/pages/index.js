@@ -10,7 +10,7 @@ Page.extend({
   pagelets: {             // The pagelets that should be rendered.
     status: pagelet.extend({
       dependencies: pagelet.prototype.dependencies.concat(
-        Contour.get('npm').core
+        Contour.get('npm').grid
       ),
 
       latest: {
